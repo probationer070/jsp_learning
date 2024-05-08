@@ -1,10 +1,10 @@
-<%@ page contentType="text/html; charset=utf-8"%>
+﻿<%@ page contentType="text/html; charset=utf-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
- <link rel ="stylesheet" href ="./resources/css/bootstrap.min.css" />
-<title>도서 등록</title>
+<link rel ="stylesheet" href ="./resources/css/bootstrap.min.css" />
 <script type="text/javascript" src="./resources/validation.js"></script>
+<title>도서 등록</title>
 </head>
 <body>
 <fmt:setLocale value='<%= request.getParameter("language") %>'/>
@@ -19,16 +19,16 @@
       </div>
     </div>
   
-	 <div class="row align-items-md-stretch">
-		<div class="text-end"> 
-			<a href="?language=ko" >Korean</a> | <a href="?language=en" >English</a>
+  <div class="row align-items-md-stretch">	 
+   		<div class="text-end"> 
+			<a href="?language=ko">Korean</a> | <a href="?language=en" >English</a>
 			<a href = "logout.jsp" class ="btn btn-sm btn-success pull right">logout</a>
-		</div>		 	
-		<form name="newBook" action="./processAddBook.jsp" method="post" enctype="multipart/form-data">		
+		</div>	
+		<form name="newBook" id="newBook" action="./processAddBook.jsp" method="post" enctype ="multipart/form-data">		
 			<div class="mb-3 row">
 				<label class="col-sm-2"><fmt:message key="bookId" /></label>
 				<div class="col-sm-3">
-					<input type="text" name="bookId" id="bookId" class="form-control"  >
+					<input type="text" name="bookId" id="bookId" class="form-control" >
 				</div>
 			</div>
 			<div class="mb-3 row">
@@ -46,27 +46,27 @@
 			<div class="mb-3 row">
 				<label class="col-sm-2"><fmt:message key="author" /></label>
 				<div class="col-sm-3">
-					<input type="text" name="author" id="author" class="form-control" >
+					<input type="text" name="author" id="author" class="form-control">
 				</div>
 			</div>
 			<div class="mb-3 row">
 				<label class="col-sm-2"><fmt:message key="publisher" /></label>
 				<div class="col-sm-3">
-					<input type="text" name="publisher" id="publisher" class="form-control" >
+					<input type="text" name="publisher" id="publisher" class="form-control">
 				</div>
 			</div>
 			<div class="mb-3 row">
 				<label class="col-sm-2"><fmt:message key="releaseDate" /></label>
 				<div class="col-sm-3">
-					<input type="text" name="releaseDate" class="form-control" >
+					<input type="text" name="releaseDate" id="releaseDate" class="form-control">
 				</div>
 			</div>
 	
 			<div class="mb-3 row">
 				<label class="col-sm-2"><fmt:message key="description" /></label>
 				<div class="col-sm-5">
-					<textarea name="description" id="description" cols="50" rows="2"
-						class="form-control" placeholder="100자 이상 적어주세요" minlength="10"></textarea>
+					<textarea name="description" id="description" cols="50" rows="2" 
+						class="form-control" placeholder="100자 이상 적어주세요"></textarea>
 				</div>
 			</div>			
 			<div class="mb-3 row">
@@ -78,20 +78,20 @@
 				<div class="mb-3 row">
 				<label class="col-sm-2"><fmt:message key="unitsInStock" /></label>
 				<div class="col-sm-3">
-					<input type="text" name="unitsInStock" id="unitsInStock" class="form-control" >
+					<input type="text" name="unitsInStock"  id = "unitsInStock" class="form-control" >
 				</div>
 			</div>
 			<div class="mb-3 row">
 				<label class="col-sm-2"><fmt:message key="condition" /></label>
 				<div class="col-sm-5">
-					<input type="radio" name="condition" value="New " > <fmt:message key="condition_New" /> 
-					<input type="radio" name="condition" value="Old" > <fmt:message key="condition_Old" />  
-					<input type="radio" name="condition" value="EBook" > <fmt:message key="condition_Ebook" /> 
+					<input type="radio" name="condition" value="New " ><fmt:message key="condition_New" />
+					<input type="radio" name="condition" value="Old" > <fmt:message key="condition_Old" /> 
+					<input type="radio" name="condition" value="EBook" ><fmt:message key="condition_Ebook" />
 				</div>				
 			</div>		
 			
 			<div class="mb-3 row">
-				<label class="col-sm-2"><fmt:message key="bookImage" /> </label>
+				<label class="col-sm-2"><fmt:message key="bookImage" /></label>
 				<div class="col-sm-5">
 					<input type="file" name="bookImage" class="form-control">
 				</div>
@@ -99,13 +99,13 @@
 			
 			<div class="mb-3 row">
 				<div class="col-sm-offset-2 col-sm-10 ">
-					<input type="button" class="btn btn-primary" value="<fmt:message key="button" /> " onclick="checkAdd()">
+					<input type="button" class="btn btn-primary" value="<fmt:message key="button" />" onclick="checkAdd()">
 				</div>
 			</div>
 		</form>
 	</div>
 	<jsp:include page="footer.jsp" />
-</div>
-</fmt:bundle>	
+</div>	
+</fmt:bundle>
 </body>
 </html>

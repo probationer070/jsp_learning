@@ -15,7 +15,7 @@
 	if (product == null) {
 		response.sendRedirect("exceptionNoBookId.jsp");
 	}
-
+     //모든 정보를 읽어와서 해당 bookid와 같은 정보의 책 정보를 가져오기 위해 검색
 	ArrayList<Book> goodsList = dao.getAllBooks();
 	Book goods = new Book();
 	for (int i = 0; i < goodsList.size(); i++) {
