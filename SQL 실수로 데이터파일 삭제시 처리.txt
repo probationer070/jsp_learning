@@ -1,0 +1,203 @@
+상단 네비
+로그인회원가입정보찾기
+클라우드포털
+ 
+메인 메뉴
+클라우드
+강좌
+질문&답변
+동영상
+구인구직
+AI
+뉴스광장
+자유게시판
+강좌
+클라우드/리눅스에 관한 강좌입니다.
+강좌
+
+데이터베이스분류
+실수로 데이터파일 삭제시 처리방안
+작성자 정보
+웹관리자작성
+작성일2005.04.13 04:51
+컨텐츠 정보
+ 7,386조회
+ 0추천
+본문
+ 최저가 서버호스팅 제공 : 85,000원/월
+작성자: 강명규
+OS: Windows 2000 (intel)
+Oracle: Oracle 8.1.7
+
+
+정석(?)은 full backup을 restore하는 방법입니다.
+full backup이 한달전이라면 .. 끔직하죠?
+차선의 방안은 해당 데이터파일이 속한 테이블스페이스를 Drop하는 것입니다.
+해당 테이블스페이스내의 데이터는 어쩔 수 없습니다. 날라간 거죠
+참고로 테이블스페이스내의 데이터파일만 삭제하는 것은 temporary tablespace가 아닌이상 안됩니다.
+
+1. alert.log, DBWR trace file파일을 보면 에러메시지가 있으므로 에러내용을 확인합니다.
+   파일삭제로 인한 문제라는 것은 알고 있으므로 그냥 확인만 합니다.
+2. svrmgrl를 실행해 connect internal로 로그인합니다.
+3. db를 shutdown합니다.
+4. db를 startup mount로 시동합니다.
+5. alter database datafile '데이터파일이름' offline drop;을 수행합니다.
+6. database를 open합니다.
+7. 데이터파일이 속한 tablespace를 drop합니다.
+
+
+
+다음은 실제 예제입니다.
+
+삭제한 데이터파일:   d:dd_temp.dbf
+해당 테이블스페이스: dd_temp
+
+오라클DB가 shutdown상태에서(온라인상태면 윈도의 경우 데이터파일을 OS에서 삭제할 수 없습니다. 유닉스계열은 삭제가능합니다.)
+그리고 DB를 startup을 합니다. alert.log에는 에러내용이 기록되고, DBWR trace file파일에 좀더 세부적인 에러내용이
+기록됩니다. SQL*PLUS연결시 다음과 같은 에러가 발생합니다.
+
+SQL*Plus: Release 8.1.6.0.0 - Production on 월 Sep 17 16:19:13 2001
+
+(c) Copyright 1999 Oracle Corporation.  All rights reserved.
+
+
+Connected to:
+Oracle8i Release 8.1.5.0.2 - Production
+With the Java option
+PL/SQL Release 8.1.5.0.0 - Production
+
+SQL> connect system/xxxxxx
+ERROR:
+ORA-01033: ORACLE initialization or shutdown in progress
+
+
+경고: 이제는 ORACLE에 연결되어 있지 않습니다.
+SQL>
+
+
+해결방법
+이제 oracle계정에서 다음과 같이 합니다.
+
+
+C:Documents and SettingsAdministrator>svrmgrl
+
+Oracle Server Manager Release 3.1.6.0.0 - Production
+
+Copyright (c) 1997, 1999, Oracle Corporation.  All Rights Reserv
+
+Oracle8i Enterprise Edition Release 8.1.6.0.0 - Production
+With the Partitioning option
+JServer Release 8.1.6.0.0 - Production
+
+SVRMGR> connect internal
+암    호:
+접속되었습니다.
+SVRMGR> shutdown
+ORA-01109: 데이터베이스가 개방되지 않습니다
+데이터베이스가 마운트 해제되었습니다.
+ORACLE 인스턴스가 종료되었습니다.
+SVRMGR> startup mount
+ORACLE 인스턴스가 시작되었습니다.
+시스템 글로벌 영역                         46298380 바이트 합계
+Fixed Size                                          70924 바이트
+Variable Size                                    20549632 바이트
+Database Buffers                                 25600000 바이트
+Redo Buffers                                        77824 바이트
+데이터베이스가 마운트되었습니다.
+SVRMGR> alter database datafile 'd:dd_temp.dbf' offline drop;
+명령문이 처리되었습니다.
+SVRMGR> alter database open;
+명령문이 처리되었습니다.
+SVRMGR> drop tablespace dd_temp including contents;
+명령문이 처리되었습니다.
+SVRMGR>
+
+모든 것이 정상적(?)으로 되었습니다.
+
+PS>
+음.. index tablespace 나 temporary tablespace등과 같이 실제 데이터와는 무관한 테이블스페이스는
+위에서 설명한 방식으로 처리한 다음 재생성해주면 좋을 것 같습니다.
+
+Copyleft(C) 명규의 DBAKOREA All rights free
+ 국내 최저가 네이버클라우드 서버 제공 : 88,000원/월
+"무단배포금지: 클라우드포털(www.linux.co.kr)의 모든 강좌는 저작권에 의해 보호되는 콘텐츠입니다. 무단으로 복제하여 배포하는 행위는 금지되어 있습니다."
+관련자료
+이전	
+redo log파일이름 변경
+작성일2005.04.13 04:52
+다음	
+초간단 트리거강좌
+작성일2005.04.13 04:51
+댓글 0
+등록된 댓글이 없습니다.
+로그인한 회원만 댓글 등록이 가능합니다.
+
+
+공지사항
+등록일09.15
+네이버클라우드 콘솔(console) 실무작업 강좌를 시작합니다.
+등록일09.13
+네이버클라우드 자격증 NCE 요약강의를 시작하였습니다.
+등록일06.05
+쉘프로그래밍(shell programming)강좌를 시작했습니다.
+등록일05.25
+록키리눅스(RockyLinux) 강좌를 시작했습니다.
+등록일01.10
+리눅스마스터 자격증 강좌를 업로드하고 있습니다.
+등록일01.10
+클라우드와 리눅스 보안강좌 업로드 중입니다.
+등록일08.09
+파이썬 강좌를 시작합니다.
+
+뉴스광장
+등록일04.19
+[웹개발국비과정] 에이콘아카데미 홍대학원, 자바 웹개발 + 빅데이터 취업과정
+등록일04.18
+[베스트직업훈련기관/우수훈련기관] 구디아카데미 백엔드 개발자 부트캠프 83기 모집
+등록일04.17
+[코딩무료교육] K-Digital 웹 시스템 양성 무료교육 취업과정형 8기(5월)
+등록일04.17
+[5/16개강] (K디지털트레이닝) 클라우드 활용 자바 개발자 양성과정 훈련생 모집
+등록일04.16
+에이콘아카데미 강남, 자바(JAVA)중심 풀스택 캠프
+등록일04.16
+더조은아카데미 종로, 빅데이터분석(with 파이썬)과 엘라스틱서치를 활용한 자바(Java)웹개발자양성
+등록일04.16
+[구디아카데미] (5/16개강) 가산디지털단지역 베스트직업훈련기관 클라우드 활용 자바 개발자 부트캠프 훈련생 모집
+등록일04.16
+⭐[에스넷그룹] 클라우드 활용 네트워크 엔지니어 양성과정⭐
+등록일04.16
+⭐[현대이지웰] Java 풀스택 개발자 아카데미⭐
+등록일04.16
+[멀티캠퍼스]✨데이터 분석&서비스개발(Python) 수강생 모집✨
+
+현재 회원수 : 60,032 명
+현재 강좌수 : 35,773 개
+현재 접속자 : 110 명
+사이트 소개 이용안내 이용약관 개인정보처리방침 이메일 무단수집거부공지사항 FAQ 이용문의
+(주)수퍼유저
+대표 : 박성수
+전화 : 1544-8128
+이메일 : service@linux.kr
+경기도 용인시 기흥구 동백중앙로 191, 8층 씨8676호(중동, 씨티프라자)
+클라우드포털  All rights reserved.
+클라우드포털닫기
+메뉴
+1:1 문의
+FAQ
+자동로그인
+아이디필수
+아이디
+비밀번호필수
+비밀번호
+네이버 로그인
+카카오 로그인
+메뉴
+클라우드
+강좌
+질문&답변
+동영상
+구인구직
+AI
+뉴스광장
+자유게시판
