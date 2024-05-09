@@ -1,10 +1,11 @@
-﻿<%@ page contentType="text/html; charset=utf-8"%>
+<%@ page contentType="text/html; charset=utf-8"%>
 <%@ page import="java.sql.*"%>
 <html>
 <head>
  <link rel ="stylesheet" href ="./resources/css/bootstrap.min.css" />
- <script type="text/javascript" src="./resources/validation.js"></script>
 <title>도서 편집</title>
+<script type="text/javascript" src="./resources/validation.js"></script>
+
 </head>
 <%
 	String edit = request.getParameter("edit");
@@ -25,31 +26,32 @@
 				PreparedStatement pstmt = null;
 				ResultSet rs = null;
 				
-				String sql = "SELECT * FROM BOOK ORDER BY B_ID";
+				String sql = "select * from book";
 				pstmt = conn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
 				while (rs.next()) {
-					String d = rs.getString("b_description");
+					String desc = rs.getString("b_description");
 			%>
+      
+	
+	
      	<div class="col-md-4">
        		<div class="h-100 p-2 round-3">		
        		    <img src="./resources/images/<%=rs.getString("b_filename")%>" style="width: 250; height:350" />	
 				<p><h5><b><%=rs.getString("b_name")%></b></h5>
 				<p><%=rs.getString("b_author")%>
 				<br> <%=rs.getString("b_publisher")%> | <%=rs.getString("b_unitPrice")%>원
-				<p> <%=d.substring(0,60)%>....
+				<p> <%=desc.substring(0,60)%>....
 				<p><%=rs.getString("b_unitPrice")%>원
 				<p><%
 						if (edit.equals("update")) {
 					%>
-					<a href="./updateBook.jsp?id=<%=rs.getString("b_id")%>" 
-					       class="btn btn-success" role="button"> 수정 &raquo;></a>
+					<a href="./updateBook.jsp?id=<%=rs.getString("b_id")%>" class="btn btn-success" role="button"> 수정 &raquo;</a>
 					
 					<%
 						} else if (edit.equals("delete")) {
 					%>
-					<a href="#" onclick="deleteConfirm('<%=rs.getString("b_id")%>')" 
-					    class="btn btn-danger" role="button">삭제 &raquo;></a>
+					<a href="./editBook.jsp?edit=delete" onclick="deleteConfirm('<%=rs.getString("b_id")%>')" class="btn btn-danger" role="button">삭제 &raquo;</a>
 					<%
 						}
 					%>	

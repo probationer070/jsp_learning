@@ -7,7 +7,7 @@
 		response.sendRedirect("cart.jsp");
 		return;
 	}
-    //세션에 있는 모든 정보 제거
+
 	session.invalidate();
 	response.sendRedirect("cart.jsp");
 %>

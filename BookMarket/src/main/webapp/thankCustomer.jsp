@@ -54,7 +54,7 @@
 </body>
 </html>
 <%
-	session.invalidate();//세션정보 삭제..
+	session.invalidate();
 
 	for (int i = 0; i < cookies.length; i++) {
 		Cookie thisCookie = cookies[i];

@@ -4,6 +4,8 @@
 <%@ page import="dto.Book"%>
 <%@ page import="dao.BookRepository"%>
 <%
+	request.setCharacterEncoding("UTF-8");
+
 	String cartId = session.getId();
 
 	String shipping_cartId = "";
@@ -81,6 +83,7 @@
 				ArrayList<Book> cartList = (ArrayList<Book>) session.getAttribute("cartlist");
 				if (cartList == null)
 					cartList = new ArrayList<Book>();
+				
 				for (int i = 0; i < cartList.size(); i++) { // 상품리스트 하나씩 출력하기
 					Book book = cartList.get(i);
 					int total = book.getUnitPrice() * book.getQuantity();
@@ -102,7 +105,7 @@
 				<td class="text-center text-danger"><strong><%=sum%> </strong></td>
 			</tr>
 			</table>			
-				<a href="./ShippingInfo.jsp?cartId=<%=shipping_cartId%>"class="btn btn-secondary" role="button"> 이전 </a>
+				<a href="./shippingInfo.jsp?cartId=<%=shipping_cartId%>"class="btn btn-secondary" role="button"> 이전 </a>
 				<a href="./thankCustomer.jsp"  class="btn btn-success" role="button"> 주문 완료 </a>
 				<a href="./checkOutCancelled.jsp" class="btn btn-secondary"	role="button"> 취소 </a>			
 		</div>

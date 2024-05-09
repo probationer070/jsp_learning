@@ -1,9 +1,8 @@
-﻿<%@ page contentType="text/html; charset=utf-8"%>
+<%@ page contentType="text/html; charset=utf-8"%>
 <%@ page import="java.sql.*"%>
 <html>
 <head>
  <link href = "./resources/css/bootstrap.min.css" rel="stylesheet">
-
 <title>도서 목록</title>
 </head>
 <body>
@@ -16,37 +15,34 @@
         <p class="col-md-8 fs-4">BookList</p>      
       </div>
     </div>
-	 <%@ include file="dbconn.jsp" %>
-	 <div class="row align-items-md-stretch   text-center">	 	
-	 <%
-	    PreparedStatement pstmt = null;
+    <%@ include file="dbconn.jsp" %>   
+ 	<div class="row align-items-md-stretch text-center">	 	
+	<%
+	 	PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
-		String sql = "SELECT * FROM BOOK ORDER BY B_ID";
+		String sql = "select * from Book order by b_id";
 		pstmt = conn.prepareStatement(sql);
 		rs = pstmt.executeQuery();
 		while (rs.next()) {
-			String d = (rs.getString("b_description"));
-	  %>
-     	<div class="col-md-4">
-       		<div class="h-100 p-2">	
-       			<img src="./resources/images/<%=rs.getString("b_filename")%>" style="width: 250; height:350" />		
-				<h5><b><%=rs.getString("b_name")%></b></h5>
-				<p><%=rs.getString("b_author")%>
-				<br> <%=rs.getString("b_publisher")%> | <%=rs.getString("b_unitPrice")%>원
-				<p> <%=d.substring(0,60)%>....
-				<p><%=rs.getString("b_unitPrice")%>원
-				<p><a href="./book.jsp?id=<%=rs.getString("b_id")%>" class="btn btn-secondary" role="button"> 상세 정보 &raquo;</a>	</div>	
-		</div>			
-		<%
-			}
-		if (rs != null) 
-			rs.close();
-		if (pstmt != null)
-			pstmt.close();
-		if (conn != null)
-			conn.close();
-		%>	
+			String desc = rs.getString("b_description");
+  	%>
+	<div class="col-md-4">	
+   		<div class="h-100 p-2">	
+   			<img src="./resources/images/<%=rs.getString("b_filename")%>" style="width: 250; height:350" />		
+			<h5><b><%=rs.getString("b_name")%></b></h5>
+			<p><%=rs.getString("b_author")%>
+			<br> <%=rs.getString("b_publisher")%> | <%=rs.getString("b_unitPrice")%>원
+			<p> <%=desc.substring(0,60)%>...
+			<p><%=rs.getString("b_unitPrice")%>원
+			<p><a href="./book.jsp?id=<%=rs.getString("b_id")%>" class="btn btn-secondary" role="button"> 상세 정보 &raquo;</a>	
+		</div>	
+	</div>			
+	<%
+	}
+	if (rs != null) rs.close();
+	if (pstmt != null) pstmt.close();
+	if (conn != null) conn.close();
+	%>	
 		</div>	
 		<%@ include file="footer.jsp"%>   
   </div>
