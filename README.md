@@ -22,3 +22,6 @@
   	 <user username="admin" password="admin1234" roles="admin"/>
 
 책으로 공부한 내용들이 기록됩니다.
+
+TRIGGER, PROCEDURE 같은 PL/SQL의 경우는 Eclipse에서 excute SQL File을 할 경우에는 실행이 안 되는 경우가 허다하니 
+SQLDeveloper에서 실행하든 다른 곳에서 TRIGGER, PROCEDURE 생성 후에 그냥 서버 실행 할 것
