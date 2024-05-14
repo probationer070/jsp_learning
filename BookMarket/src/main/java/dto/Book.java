@@ -2,12 +2,11 @@ package dto;
 
 import java.io.Serializable;
 
-public class Book implements Serializable {
-
-	private static final long serialVersionUID = -4274700572038677000L;
-
-	private String bookId; 		    //책 ID
-	private String name;			//책이름
+public class Book implements Serializable{
+	private static final long serialVersionID=-4274700572038677000L;
+	
+	private String bookId; 		    //도서 ID
+	private String name;		    //도서명
 	private int  unitPrice; 	    //가격
 	private String author;			//저자
 	private String description; 	//설명
@@ -16,17 +15,18 @@ public class Book implements Serializable {
 	private long   unitsInStock; 	//재고개수
 	private String releaseDate;   //출판일(월/년)
 	private String condition; 		//신제품 or 구제품 or 리퍼브제품
+	
 	private String filename;
-    private int quantity;
-    
+	private int quantity;
+	
 	public Book() {
 		super();
-}
-
+	}
+	
 	public Book(String bookId, String name, Integer unitPrice) {
-		this.bookId = bookId;
-		this.name = name;
-		this.unitPrice = unitPrice;
+		this.setBookId(bookId);
+		this.setName(name);
+		this.setUnitPrice(unitPrice);
 	}
 
 	public String getBookId() {
@@ -53,20 +53,20 @@ public class Book implements Serializable {
 		this.unitPrice = unitPrice;
 	}
 
-	public String getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-
 	public String getDescription() {
 		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 
 	public String getPublisher() {
@@ -77,20 +77,20 @@ public class Book implements Serializable {
 		this.publisher = publisher;
 	}
 
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
 	public long getUnitsInStock() {
 		return unitsInStock;
 	}
 
 	public void setUnitsInStock(long unitsInStock) {
 		this.unitsInStock = unitsInStock;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public String getReleaseDate() {
