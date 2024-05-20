@@ -30,9 +30,13 @@ $(function(){
 		}
 	})
 
-	$('#delete').on('click', function(){
-		$("form[name=form1]").attr('action', "delete.do")
-		$("form[name=form1]").submit();
+	$('#delete').on('click', function(click_id){
+		if (confirm("삭제하시겠습니까?") === true) {			
+			$("form[name=form1]").attr('action', "delete.do")
+			$("form[name=form1]").submit();			
+		}
+		return false;
+		
 	})
 	
 	
