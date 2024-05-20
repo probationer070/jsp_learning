@@ -39,9 +39,19 @@
 									<tr>
 										<td>${article.rn}</td>
 								        <td style="text-align: left; padding-left: 20px;">
-									         <a href="#" id="callContent" onclick="callContent('${article.bno}')">
-									         	${article.subject}
-									         </a>
+								        	<c:choose>
+								        		<c:when test="${article.blevel>0}">
+								        			<img src="images/level.gif" width="${article.blevel*10}" height="5">
+								        			<img src="images/re.gif">
+											        <a href="#" onclick="callContent('${article.bno}')">
+											        	${article.subject}</a>
+								        		</c:when>
+								        		<c:otherwise>
+								        			<img src="images/level.gif" width="5" height="5">
+											        <a href="#" onclick="callContent('${article.bno}')">
+											        	${article.subject}</a>
+								        		</c:otherwise>
+								        	</c:choose>
 								        </td>
 								        <td>${article.regdate}</td>
 								        <td>${article.readcount}</td>
@@ -65,7 +75,22 @@
 			</div>
 	       	<input type="hidden" name="bno" value="">
 			<input type="hidden" name="pageNum" value="${pageNum}" />
+			<div align="center">
+				<c:forEach var="pno" begin="1" end="${totalPageCnt}">
+					<a href="./list.do?pageNum=${pno}">
+						<c:choose>
+							<c:when test="${pageNum == pno}">
+								<font color=" 4c5317" style="font-weight: bold">[${pno}]</font>
+							</c:when>
+							<c:otherwise>
+								<font color=" 4c5317">[${pno}]</font>
+							</c:otherwise>
+						</c:choose>
+					</a>
+				</c:forEach>
+			</div>
 		</form>
+		
 		
 		</div>
 	</div>
