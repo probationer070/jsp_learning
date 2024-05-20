@@ -58,7 +58,7 @@ public class BoardDAO {
 			String sql = " select * from"
 				+ " (select rownum RN, A.* from \r\n" 
 				+ " (select * from board_list"
-				+ " order by bno desc) A) \r\n"
+				+ " order by bref desc, bno, blevel) A) \r\n"
 				+ " where RN between ? and ? \r\n";
 			conn = dbconn.getConnection();
 			pstmt = conn.prepareStatement(sql);

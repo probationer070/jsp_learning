@@ -86,4 +86,10 @@ public class BoardDTO {
 	public void setRn(int rn) {
 		this.rn = rn;
 	}
+	
+	public String toString() {
+		// 에러 null 값 확인용
+		return "data==>"+rn+"::"+bno+"::"+bref+"::"+bstep+"::"
+				+blevel+"::"+readcount+"::"+subject+"::"+writer+"::"+content+"::"+passwd+"::"+regdate;
+	}
 }
