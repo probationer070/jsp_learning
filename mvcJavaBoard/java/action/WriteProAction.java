@@ -12,7 +12,16 @@ public class WriteProAction implements CommandAction {
 		BoardDTO article = new BoardDTO();
 		// 답글인가?
 		if(request.getParameter("bno") != null && request.getParameter("bno").length() != 0) {
+			article.setBno(Integer.parseInt(request.getParameter("bno")));
+			article.setBref(Integer.parseInt(request.getParameter("bref")));
+			article.setBlevel(Integer.parseInt(request.getParameter("blevel")));
+			article.setBstep(Integer.parseInt(request.getParameter("bstep")));
 			
+			article.setSubject(request.getParameter("subject"));
+			article.setWriter(request.getParameter("writer"));
+			article.setContent(request.getParameter("content"));
+			article.setPasswd(request.getParameter("passwd"));
+			article.setIp(request.getRemoteAddr());
 		} else {
 			article.setSubject(request.getParameter("subject"));
 			article.setWriter(request.getParameter("writer"));
@@ -20,7 +29,6 @@ public class WriteProAction implements CommandAction {
 			article.setPasswd(request.getParameter("passwd"));
 			article.setIp(request.getRemoteAddr());
 		}
-		
 		BoardDAO dao = BoardDAO.getDAO();
 		
 		String msg;

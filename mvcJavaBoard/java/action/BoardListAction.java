@@ -16,7 +16,7 @@ public class BoardListAction implements CommandAction {
 		BoardDAO dao = BoardDAO.getDAO();
 		// 전체 레코드 수
 		int total = dao.getTotal();
-		System.out.println(total);
+		System.out.println("전체 게시글 수 : "+total);
 		
 		int pageNum;
 		if (request.getParameter("pageNum") != null && 

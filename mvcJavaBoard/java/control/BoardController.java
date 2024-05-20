@@ -44,7 +44,7 @@ public class BoardController extends HttpServlet {
 		
 		while (keyset.hasNext()) {
 			String command = (String) keyset.next();
-			String className = pr.getProperty(command);
+			String className = pr.getProperty(command).trim();
 			
 			// 해당 클래스를 클래스로 읽어서 생성				
 			try {

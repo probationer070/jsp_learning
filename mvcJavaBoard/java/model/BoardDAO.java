@@ -121,9 +121,20 @@ public class BoardDAO {
 				article.setBlevel(article.getBlevel()+1);
 				article.setBstep(article.getBstep()+1);
 			}
+			pstmt.close();
 			sql = "insert into board_list(bno, bref, bstep, blevel, readcount,"
-					+ " subject, content, writer, regdate, ip, passwd)\r\n"
-					+ " values(?,?,?,?,0,?,?,?,to_char(sysdate, 'yyyy/mm/dd(HH:mm:ss)'),?,?)";
+				+ " subject, content, writer, regdate, ip, passwd)\r\n"
+				+ " values(?,?,?,?,0,?,?,?,to_char(sysdate, 'yyyy/mm/dd(HH:mm:ss)'),?,?)";
+			
+			System.out.println(article.getBno());
+			System.out.println(article.getBref());
+			System.out.println(article.getBstep());
+			System.out.println(article.getBlevel());
+			System.out.println(article.getSubject());
+			System.out.println(article.getContent());
+			System.out.println(article.getWriter());
+			System.out.println(article.getIp());
+			System.out.println(article.getPasswd());
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, article.getBno());
@@ -145,6 +156,108 @@ public class BoardDAO {
 			if (conn != null) try {conn.close();} catch (SQLException e) {}
 		}
 		return r;
+	}
+
+	public BoardDTO getArticle(int bno) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		BoardDTO article = null;
+		try {
+			conn = dbconn.getConnection();
+			conn.setAutoCommit(false);	// autocommit 취소 됨
+			// 조회수 증가하고 가져오기 dao에서. autocommit 이 되어있음
+			String sql = "update board_list set readcount = readcount+1"
+						+ " where bno = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			pstmt.executeUpdate();
+			// 취소하고 에러가 없으면 commit
+			pstmt.close();
+			
+			sql = "select * from board_list where bno = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			pstmt.executeUpdate();
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				article = new BoardDTO();
+				article.setBno(rs.getInt("bno"));
+				article.setBref(rs.getInt("bref"));
+				article.setBstep(rs.getInt("bstep"));
+				article.setBlevel(rs.getInt("blevel"));
+				article.setReadcount(rs.getInt("readcount"));
+				
+				article.setSubject(rs.getString("subject"));
+				article.setContent(rs.getString("content"));
+				article.setWriter(rs.getString("writer"));
+				article.setIp(rs.getString("ip"));
+				article.setRegdate(rs.getString("regdate"));
+				article.setPasswd(rs.getString("passwd"));
+			}
+			conn.commit();
+		} catch (NamingException | SQLException e) {
+			// 오류나면 rollback
+			try { conn.rollback();} catch (SQLException e1) {}
+			e.printStackTrace();
+		} finally {
+			try {conn.setAutoCommit(true);} catch (SQLException e) {}
+			if (rs != null) try {rs.close();} catch (SQLException e) {}
+			if (pstmt != null) try {pstmt.close();} catch (SQLException e) {}
+			if (conn != null) try {conn.close();} catch (SQLException e) {}
+		}
+		
+		
+		return article;
+	}
+
+	public void updateArticle(BoardDTO article) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			String sql = "update board_list set subject=?, content=?, writer=?, regdate=to_char(sysdate, 'yyyy/mm/dd(HH:mm:ss)'), passwd=?\r\n"
+					   + "where bno=?";
+			
+			conn = dbconn.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, article.getSubject());
+			pstmt.setString(2, article.getContent());
+			pstmt.setString(3, article.getWriter());
+			pstmt.setString(4, article.getPasswd());
+			pstmt.setInt(5, article.getBno());
+			pstmt.executeUpdate();
+			
+
+			
+		} catch (NamingException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) try {pstmt.close();} catch (SQLException e) {}
+			if (conn != null) try {conn.close();} catch (SQLException e) {}
+		}
+		
+	}
+
+	public void deleteArticle(BoardDTO article) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			String sql = "delete from board_list where bno=?";
+			
+			conn = dbconn.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, article.getBno());
+			pstmt.executeUpdate();
+			
+		} catch (NamingException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) try {pstmt.close();} catch (SQLException e) {}
+			if (conn != null) try {conn.close();} catch (SQLException e) {}
+		}
+		
 	}
 	
 }
