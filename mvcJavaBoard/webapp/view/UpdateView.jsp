@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>게시글List</title>
+	<title>게시글</title>
 	<link rel="stylesheet" href="./resources/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="./resources/css/border.css" />
 	<script src="./resources/js/jquery-3.7.1.min.js"></script>
@@ -13,45 +13,40 @@
 <body>
 	<div class="container py-8">
 		<div align="center" class="title mt-5">
-			<h2>게시글 작성</h2>
+			<h2>게시글 수정</h2>
 		</div>
 		<div id="content" align="center">
 			<div class="row align-items-md-stretch" style="width: 60%;">
-				<form name="form1" action="writePro.do" method="post">
+				<form name="form1" action="updatePro.do" method="post">
 				
 					<div style="padding-top: 20px;" align="center">
 						<table class="table table-hover text-center table-bordered" style="">
 
 							<tr>
 								<th width="45%" class="col-sm-4 control-label">제목</th>
-								<td align="right">
-								<c:choose>
-									<c:when test="${article!=null && article.bno!=0}">
-										<input name="subject" class="form-control chk" 
-												title="제목" placeholder="제목을 입력하시오." value="[답글]">	
-									</c:when>
-									<c:otherwise>
-										<input name="subject" class="form-control chk" 
-												title="제목" placeholder="제목을 입력하시오.">	
-									</c:otherwise>
-								</c:choose>
-								</td>
+								<td align="right"><input name="subject"
+									class="form-control-plaintext" value="${article.subject}" ></td>
 							</tr>
 							<tr>
 								<th width="45%" class="col-sm-4 control-label">작성자</th>
 								<td align="right"><input name="writer"
-									class="form-control chk" title="작성자" placeholder="작성자"></td>
+									class="form-control-plaintext" value="${article.writer}" ></td>
 							</tr>
 							<tr>
 								<th width="45%" class="col-sm-4 control-label">내용</th>
-								<td align="right"><textarea cols="50" rows="7" title="내용"
-										style="resize: none;" name="content" class="form-control chk"
-										placeholder="내용"></textarea></td>
+								<td align="right"><textarea cols="50" rows="7" 
+										style="resize: none;" name="content" class="form-control-plaintext "
+										>${article.content}</textarea></td>
+							</tr>
+							<tr>
+								<th width="45%" class="col-sm-4 control-label">작성일</th>
+								<td align="right"><input name="regdate" type="text" 
+									 class="form-control-plaintext " value="${article.regdate}"></td>
 							</tr>
 							<tr>
 								<th width="45%" class="col-sm-4 control-label">비문</th>
-								<td align="right"><input name="passwd" type="password"
-									title="비밀번호" class="form-control chk" placeholder="비밀번호"></td>
+								<td align="right"><input name="passwd" type="password" 
+									class="form-control-plaintext " value="${article.passwd}"></td>
 							</tr>
 
 						</table>
@@ -59,7 +54,7 @@
 					
 					<div class="py-3" align="right">
 						<button type="button" class="btn btn-outline-secondary" id="callList">글목록</button>
-						<button type="button" class="btn btn-outline-primary" id="sendSubmit">등록</button>
+						<button type="button" class="btn btn-outline-info" id="saveContent">저장</button>
 					</div>
 				
 					<input type="hidden" name="pageNum" value="${pageNum}" />

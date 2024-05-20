@@ -13,6 +13,29 @@ $(function(){
 		var pageNo = document.form1.pageNum.value;
 		location.href = "list.do?pageNum="+pageNo;
 	})
+
+	$('#reply').on('click', function(){
+		$("form[name=form1]").attr('action', "writeForm.do")
+		$("form[name=form1]").submit();
+	})
+
+	$('#update').on('click', function(){
+		$("form[name=form1]").attr('action', "update.do")
+		$("form[name=form1]").submit();
+	})
+	
+	$('#saveContent').on("click", function() {
+		if (chkValidate()) {
+			document.form1.submit();
+		}
+	})
+
+	$('#delete').on('click', function(){
+		$("form[name=form1]").attr('action', "delete.do")
+		$("form[name=form1]").submit();
+	})
+	
+	
 });	// ready to close;
 
 function chkValidate() {
@@ -28,3 +51,12 @@ function chkValidate() {
 	}
 	return true;
 }
+
+function callContent(bno) {
+	// alert(bno);
+	var f = document.form1;
+	f.action = 'content.do';
+	f.bno.value = bno;
+	f.submit();
+}
+
