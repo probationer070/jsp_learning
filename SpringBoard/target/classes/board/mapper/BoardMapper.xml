@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board1.model.BoardDAO">
+<select id="getArticles" resultType="bvo" parameterType="pvo">
+    SELECT * FROM 
+	(SELECT ROWNUM RN, A.* FROM 
+	(SELECT BNO, BREF, BSTEP, BLEVEL,READCOUNT,
+	SUBJECT, CONTENT, WRITER, REGDATE, IP, PASSWD
+    FROM BOARD_LIST 
+    ORDER BY BREF DESC, BNO, BLEVEL) A )            	           
+	WHERE RN BETWEEN #{start} AND #{end}
+</select>
+
+<select id="getTotArticleCnt" resultType="int">
+	SELECT COUNT(BNO) FROM BOARD_LIST
+</select>
+
+
+</mapper>
