@@ -77,7 +77,18 @@
 			<input type="hidden" name="pageNum" value="${pageNum}" />
 			<div align="center">
 				<c:forEach var="pno" begin="1" end="${totalPageCnt}">
-					<a href="./list.do?pageNum=${pno}">
+					<c:choose>
+						<c:when test="${items != null && text != null}">
+							<c:set scope="request" var="items" value="${items}"></c:set>
+							<c:set scope="request" var="text" value="${text}"></c:set>
+							<c:set scope="page" var="list" value="./list.do?pageNum=${pno}&text=${text}&items=${items}"></c:set>
+						</c:when>
+						<c:otherwise>
+							<c:set scope="page" var="list" value="./list.do?pageNum=${pno}"></c:set>
+						</c:otherwise>
+					</c:choose>
+					<%-- <a href="./list.do?pageNum=${pno}"> --%>
+					<a href="${list}" >
 						<c:choose>
 							<c:when test="${pageNum == pno}">
 								<font color=" 4c5317" style="font-weight: bold">[${pno}]</font>
@@ -89,9 +100,16 @@
 					</a>
 				</c:forEach>
 			</div>
+			<div class="mt-5 d-inline-flex justify-content-between" style="width: 350px; float:left">
+				<select name="items" class="txt">
+					<option value="subject">제목에서</option>
+					<option value="content">본문에서</option>
+					<option value="writer">글쓴이에서</option>
+				</select> 
+				<input id="text" name="text" type="text" value="${text}"/> 
+				<input type="button" id="searchBtn" class="btn btn-primary btn-sm" value="검색"/>		
+			</div>
 		</form>
-		
-		
 		</div>
 	</div>
 </div>

@@ -26,7 +26,7 @@
 								<th width="45%" class="col-sm-4 control-label">제목</th>
 								<td align="right">
 								<c:choose>
-									<c:when test="${article!=null && article.bno!=0}">
+									<c:when test="${articles!=null && articles.bno!=0}">
 										<input name="subject" class="form-control chk" 
 												title="제목" placeholder="제목을 입력하시오." value="[답글]">	
 									</c:when>

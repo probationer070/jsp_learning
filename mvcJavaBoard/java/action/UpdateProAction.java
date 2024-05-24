@@ -12,33 +12,34 @@ public class UpdateProAction implements CommandAction {
 		BoardDTO article = new BoardDTO();
 		BoardDAO dao = BoardDAO.getDAO();
 		
-		String view = "view/BoardContent.jsp";
-		int bno;
-		if (request.getParameter("bno") != null && 
-				request.getParameter("bno").length() > 0) {
-			bno = Integer.parseInt(request.getParameter("bno"));
+		int pageNum;
+		if (request.getParameter("pageNum") != null && 
+				request.getParameter("pageNum").length() > 0) {
+			pageNum = Integer.parseInt(request.getParameter("pageNum"));
 		} else {
-			bno = 0;
-			request.setAttribute("msg", "등록된 게시글이 없습니다.");
-			view = "view/MsgPage.jsp";
+			pageNum = 1;
 		}
-		
+
 		if (request.getParameter("bno") != null) 
 			article.setBno(Integer.parseInt(request.getParameter("bno")));
-		if (request.getParameter("writer") != null) 
 			article.setWriter(request.getParameter("writer"));
-		if (request.getParameter("subject") != null) 
 			article.setSubject(request.getParameter("subject"));
-		if (request.getParameter("content") != null) 
 			article.setContent(request.getParameter("content"));
-		article.setPasswd(request.getParameter("passwd"));
+			article.setPasswd(request.getParameter("passwd"));
+			article.setIp(request.getRemoteAddr());
 		
-		dao.updateArticle(article);
+		int r = 0;
+		r = dao.updateArticle(article);
 		
-		request.setAttribute("bno", bno);
-		request.setAttribute("newView", "list.do");
+		String msg;
+		if (r > 0) msg = "수정 성공";
+		else msg = "수정 실패";
 		
-		return "index.jsp";
+		String newView = "list.do?pageNum="+pageNum;
+		request.setAttribute("msg", msg);
+		request.setAttribute("newView", newView);
+		
+		return "view/MsgPage.jsp";
 	}
 
 }

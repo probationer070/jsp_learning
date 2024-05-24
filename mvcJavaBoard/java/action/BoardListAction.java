@@ -15,7 +15,9 @@ public class BoardListAction implements CommandAction {
 		
 		BoardDAO dao = BoardDAO.getDAO();
 		// 전체 레코드 수
-		int total = dao.getTotal();
+		String items = request.getParameter("items");
+		String text = request.getParameter("text");
+		int total = dao.getTotal(items ,text);
 		System.out.println("전체 게시글 수 : "+total);
 		
 		int pageNum;
@@ -32,12 +34,22 @@ public class BoardListAction implements CommandAction {
 		int start, end;		
 		start = (pageNum - 1) * Pageinfo.LINE_OF_PAGE + 1;
 		end = (pageNum * Pageinfo.LINE_OF_PAGE > total) ? total: pageNum * Pageinfo.LINE_OF_PAGE;
-		List<BoardDTO> articles = dao.getArticles(start, end);	
+		
+		List<BoardDTO> articles = null;
+		
+		if(text != null && items != null) 
+			// To do 검색 후  페이지 설정 확인 필요
+			articles = dao.getArticles(start, end, items, text);	
+		else
+			articles = dao.getArticles(start, end);	
 		
 		request.setAttribute("total", total);
 		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("totalPageCnt", totalPageCnt);
 		request.setAttribute("articles", articles);
+		
+		request.setAttribute("text", text);		//	현재 검색어에 대한 정보를 저장 !!!
+		request.setAttribute("items", items);
 		
 		return "view/BoardList.jsp?pageNum="+pageNum;
 	}

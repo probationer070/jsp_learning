@@ -18,10 +18,15 @@ $(function(){
 		$("form[name=form1]").attr('action', "writeForm.do")
 		$("form[name=form1]").submit();
 	})
-
+	
 	$('#update').on('click', function(){
-		$("form[name=form1]").attr('action', "update.do")
-		$("form[name=form1]").submit();
+		if(confirmPw()) {	
+			$("form[name=form1]").attr('action', "updateForm.do")
+			$("form[name=form1]").submit();			
+		} else {
+			alert("비밀번호가 맞지 않습니다.");
+			return false;
+		}
 	})
 	
 	$('#saveContent').on("click", function() {
@@ -30,17 +35,37 @@ $(function(){
 		}
 	})
 
-	$('#delete').on('click', function(click_id){
-		if (confirm("삭제하시겠습니까?") === true) {			
-			$("form[name=form1]").attr('action', "delete.do")
-			$("form[name=form1]").submit();			
+	$('#delete').on('click', function(){
+		if(confirmPw()) {
+			if (confirm("정말 삭제하시겠습니까?") === true) {			
+				$("form[name=form1]").attr('action', "deletePro.do")
+				$("form[name=form1]").submit();			
+			}
+		} else {
+			alert("비밀번호가 맞지 않습니다.");
+			return false;
 		}
-		return false;
-		
+	})
+	
+	$('#searchBtn').on('click', function() {
+		$("form[name=form1]").attr('action', "list.do");
+		$("form[name=form1]").submit();			
 	})
 	
 	
 });	// ready to close;
+
+function confirmPw() {
+	var pw = prompt('비밀번호를 입력하시오.');
+	var passwd = $("input[name=passwd]").val();
+
+	if (passwd === pw) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 
 function chkValidate() {
 	var flen = $("form[name=form1] .chk").length;

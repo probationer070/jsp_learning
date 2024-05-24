@@ -48,6 +48,40 @@ public class BoardDAO {
 		return cnt;
 	}
 	
+	public int getTotal(String items, String text) {
+		int cnt = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = dbconn.getConnection();
+			String sql = "select count(bno) from board_list";
+			if (items != null && text != null)
+				sql += " where "+items+" like '%' || ? || '%' ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			if (items != null && text != null)
+				pstmt.setString(1, text);
+			
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				cnt = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NamingException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) try {rs.close();} catch (SQLException e) {}
+			if (pstmt != null) try {pstmt.close();} catch (SQLException e) {}
+			if (conn != null) try {conn.close();} catch (SQLException e) {}
+		}
+		return cnt;
+	}
+	
 	public List<BoardDTO> getArticles(int start, int end) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -96,6 +130,61 @@ public class BoardDAO {
 
 		return articles;
 	}
+	
+	
+	// overload
+	public List<BoardDTO> getArticles(int start, int end, String items, String text) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<BoardDTO> articles = null;
+		try {
+			String sql = " select * from"
+					+ " (select rownum RN, A.* from \r\n" 
+					+ " (select * from board_list"
+					+ " where "+items+" like '%' || ? || '%' \r\n"
+					+ " order by bref desc, bno, blevel) A) \r\n"
+					+ " where RN between ? and ? \r\n";
+			
+				
+			conn = dbconn.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, text);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
+			
+			rs = pstmt.executeQuery();
+			articles = new ArrayList<BoardDTO>();
+			
+			while (rs.next()) {
+				// 받아온 모든 게시글을 하나씩 저장해서 리스트에 저장
+				BoardDTO dto = new BoardDTO();
+				dto.setRn(rs.getInt("rn"));
+				dto.setBno(rs.getInt("bno"));
+				dto.setBref(rs.getInt("bref"));
+				dto.setBstep(rs.getInt("bstep"));
+				dto.setBlevel(rs.getInt("blevel"));
+				dto.setReadcount(rs.getInt("readcount"));
+				
+				dto.setSubject(rs.getString("subject"));
+				dto.setContent(rs.getString("content"));
+				dto.setWriter(rs.getString("writer"));
+				dto.setRegdate(rs.getString("regdate"));
+				dto.setIp(rs.getString("ip"));
+				dto.setPasswd(rs.getString("passwd"));
+				articles.add(dto);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) try {rs.close();} catch (SQLException e) {}
+			if (pstmt != null) try {pstmt.close();} catch (SQLException e) {}
+			if (conn != null) try {conn.close();} catch (SQLException e) {}
+		}
+		return articles;
+	}
 
 	public int writeArticle(BoardDTO article) {
 		Connection conn = null;
@@ -125,16 +214,6 @@ public class BoardDAO {
 			sql = "insert into board_list(bno, bref, bstep, blevel, readcount,"
 				+ " subject, content, writer, regdate, ip, passwd)\r\n"
 				+ " values(?,?,?,?,0,?,?,?,to_char(sysdate, 'yyyy/mm/dd(HH:mm:ss)'),?,?)";
-			
-			System.out.println(article.getBno());
-			System.out.println(article.getBref());
-			System.out.println(article.getBstep());
-			System.out.println(article.getBlevel());
-			System.out.println(article.getSubject());
-			System.out.println(article.getContent());
-			System.out.println(article.getWriter());
-			System.out.println(article.getIp());
-			System.out.println(article.getPasswd());
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, article.getBno());
@@ -211,13 +290,15 @@ public class BoardDAO {
 		return article;
 	}
 
-	public void updateArticle(BoardDTO article) {
+	public int updateArticle(BoardDTO article) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		int r = 0;
 		
 		try {
-			String sql = "update board_list set subject=?, content=?, writer=?, regdate=to_char(sysdate, 'yyyy/mm/dd(HH:mm:ss)'), passwd=?\r\n"
-					   + "where bno=?";
+			String sql = "update board_list set subject=?, content=?, writer=?, "
+					+ "regdate=to_char(sysdate, 'yyyy/mm/dd(HH:mm:ss)'), passwd=?, ip=? \r\n"
+					+ "where bno=?";
 			
 			conn = dbconn.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -225,30 +306,30 @@ public class BoardDAO {
 			pstmt.setString(2, article.getContent());
 			pstmt.setString(3, article.getWriter());
 			pstmt.setString(4, article.getPasswd());
-			pstmt.setInt(5, article.getBno());
-			pstmt.executeUpdate();
-			
+			pstmt.setString(5, article.getIp());
+			pstmt.setInt(6, article.getBno());
+			r = pstmt.executeUpdate();
 
-			
 		} catch (NamingException | SQLException e) {
 			e.printStackTrace();
 		} finally {
 			if (pstmt != null) try {pstmt.close();} catch (SQLException e) {}
 			if (conn != null) try {conn.close();} catch (SQLException e) {}
 		}
-		
+		return r;
 	}
 
-	public void deleteArticle(BoardDTO article) {
+	public int deleteArticle(int bno) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		int r = 0;
 		
 		try {
 			String sql = "delete from board_list where bno=?";
 			
 			conn = dbconn.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, article.getBno());
+			pstmt.setInt(1, bno);
 			pstmt.executeUpdate();
 			
 		} catch (NamingException | SQLException e) {
@@ -257,7 +338,7 @@ public class BoardDAO {
 			if (pstmt != null) try {pstmt.close();} catch (SQLException e) {}
 			if (conn != null) try {conn.close();} catch (SQLException e) {}
 		}
-		
+		return r;
 	}
 	
 }

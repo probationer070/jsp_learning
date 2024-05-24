@@ -46,7 +46,7 @@
 							<tr>
 								<th width="45%" class="col-sm-4 control-label">비문</th>
 								<td align="right"><input name="passwd" type="password" 
-									class="form-control-plaintext " value="${article.passwd}"></td>
+									class="form-control-plaintext chk" value="${article.passwd}"></td>
 							</tr>
 
 						</table>
@@ -59,9 +59,6 @@
 				
 					<input type="hidden" name="pageNum" value="${pageNum}" />
 					<input type="hidden" name="bno" value="${article.bno}" />
-					<input type="hidden" name="bref" value="${article.bref}" />
-					<input type="hidden" name="blevel" value="${article.blevel}" />
-					<input type="hidden" name="bstep" value="${article.bstep}" />
 				</form>
 			</div>
 		</div>
