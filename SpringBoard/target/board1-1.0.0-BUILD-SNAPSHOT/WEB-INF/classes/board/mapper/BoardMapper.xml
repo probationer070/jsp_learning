@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board1.model.BoardDAO">
+<select id="getArticles" resultType="bvo" parameterType="pvo">
+    SELECT * FROM 
+	(SELECT ROWNUM RN, A.* FROM 
+	(SELECT BNO, BREF, BSTEP, BLEVEL,READCOUNT,
+	SUBJECT, CONTENT, WRITER, REGDATE, IP, PASSWD
+    FROM BOARD_LIST 
+    ORDER BY BREF DESC, BNO, BLEVEL) A )            	           
+	WHERE RN BETWEEN #{start} AND #{end}
+</select>
+
+<select id="getTotArticleCnt" resultType="int">
+	SELECT COUNT(BNO) FROM BOARD_LIST
+</select>
+
+<insert id="writePro" parameterType="bvo">
+	<selectKey keyProperty="bno" resultType="int" order="BEFORE">
+		SELECT NVL(MAX(BNO), 0)+1 FROM BOARD_LIST	
+	</selectKey>
+	
+	INSERT INTO BOARD_LIST(BNO, BREF, BSTEP, BLEVEL, READCOUNT,
+				SUBJECT, CONTENT, WRITER, REGDATE, IP, PASSWD)
+	VALUES(#{bno},
+<!-- 	  <choose>
+	  	<when test="bno>0">
+	  		#{bref}, #{bstep}+1, #{blevel}+1,
+	  	</when>
+	  	<otherwise> -->
+	  		#{bno}, #{bstep}, #{blevel},
+<!-- 	  	</otherwise>
+	  </choose>	 -->
+		#{readcount},#{subject},#{content},#{writer},TO_CHAR(SYSDATE,'YYYY/MM/DD(HH:MM:SS)'),#{ip},#{passwd})
+</insert>
+
+</mapper>
