@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.Ecom6.board1.model.PageDTO;
 import com.Ecom6.board1.model.BoardDAO;
@@ -76,4 +77,27 @@ public class BoardServiceImpl implements BoardService {
 		remap.put("pdto", pdto);
 		return remap;
 	}
+	
+	@Transactional
+	@Override
+	public int writePro(BoardDTO bdto) {
+		return boardDAO.writePro(bdto);
+	}
+
+	@Override
+	public BoardDTO getContent(int bno) {
+		return boardDAO.getContent(bno);
+	}
+
+	@Override
+	public int updatePro(BoardDTO bdto) {
+		return boardDAO.updatePro(bdto);
+	}
+
+	@Override
+	public int deletePro(int bno) {
+		return boardDAO.deletePro(bno);
+	}
+
+
 }

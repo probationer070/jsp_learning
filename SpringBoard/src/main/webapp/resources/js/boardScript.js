@@ -22,7 +22,7 @@ $(function(){
 	
 	$('#update').on('click', function(){
 		if(confirmPw()) {	
-			$("form[name=form1]").attr('action', "updateForm")
+			$("form[name=form1]").attr('action', "update")
 			$("form[name=form1]").submit();			
 		} else {
 			alert("비밀번호가 맞지 않습니다.");

@@ -56,10 +56,83 @@ public class BoardController {
 	@RequestMapping(value = "/writePro")
 	public String writePro(HttpServletRequest req, HttpServletResponse res, 
 			Model model, PageDTO pdto, BoardDTO bdto) {
-		logger.info("작성페이지 : "+ pdto.toString());
+
+		bdto.setIp(req.getRemoteAddr());
+		int	r = boardService.writePro(bdto);
+		String msg = "";
 		
-		// Map<String, Object> reMap = boardService.writeArticles(bdto);
+		if (r > 0) {
+			msg = "게시글 등록 성공";
+		} else {
+			msg = "게시글 등록 실패\\n관리자에게 문의";
+		}
 		
-		return "boardlist";
+		model.addAttribute("newView", "boardlist");
+		model.addAttribute("msg", msg);
+		model.addAttribute("article", bdto);
+		model.addAttribute("pdto", pdto);
+		return "MsgPage";
+	}	
+	
+	@RequestMapping(value = "/content")
+	public String content(HttpServletRequest req, HttpServletResponse res, 
+							Model model, PageDTO pdto, BoardDTO bdto) {
+		int bno = Integer.parseInt(req.getParameter("bno"));
+		BoardDTO article = boardService.getContent(bno);
+		
+		model.addAttribute("article", article);
+		model.addAttribute("pdto", pdto);
+		return "Content";
+	}
+	
+	@RequestMapping(value = "/update")
+	public String update(HttpServletRequest req, HttpServletResponse res, 
+							Model model, PageDTO pdto, BoardDTO bdto) {
+		int bno = Integer.parseInt(req.getParameter("bno"));
+		BoardDTO article = boardService.getContent(bno);
+		
+		model.addAttribute("article", article);
+		model.addAttribute("pdto", pdto);
+		return "Update";
+	}	
+	
+	@RequestMapping(value = "/updatePro")
+	public String updatePro(HttpServletRequest req, HttpServletResponse res, 
+			Model model, PageDTO pdto, BoardDTO bdto) {
+		bdto.setIp(req.getRemoteAddr());
+		int	r = boardService.updatePro(bdto);
+		String msg = "";
+		
+		if (r > 0) {
+			msg = "게시글 수정 성공";
+		} else {
+			msg = "게시글 수정 실패\\n관리자에게 문의";
+		}
+		
+		model.addAttribute("newView", "boardlist");
+		model.addAttribute("msg", msg);
+		model.addAttribute("article", bdto);
+		model.addAttribute("pdto", pdto);
+		return "Update";
+	}
+	
+	@RequestMapping(value = "/deletePro")
+	public String delete(HttpServletRequest req, HttpServletResponse res, 
+							Model model, PageDTO pdto, BoardDTO bdto) {
+		int bno = Integer.parseInt(req.getParameter("bno"));
+		int	r = boardService.deletePro(bno);
+		String msg = "";
+		
+		if (r > 0) {
+			msg = "게시글 삭제 성공";
+		} else {
+			msg = "게시글 삭제 실패\\n관리자에게 문의";
+		}
+		
+		model.addAttribute("newView", "boardlist");
+		model.addAttribute("msg", msg);
+		model.addAttribute("article", bdto);
+		model.addAttribute("pdto", pdto);
+		return "MsgPage";
 	}
 }

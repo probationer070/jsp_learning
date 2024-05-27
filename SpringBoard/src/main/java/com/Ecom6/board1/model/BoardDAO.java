@@ -8,4 +8,15 @@ public interface BoardDAO {
 
 	int getTotArticleCnt();
 
+	int writePro(BoardDTO bdto);
+
+	BoardDTO getContent(int bno);
+
+	int updatePro(BoardDTO bdto);
+
+	int deletePro(int bno);
+
+
+
+
 }

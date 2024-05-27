@@ -10,8 +10,8 @@ import lombok.ToString;
 public class BoardDTO {
 	private int start;		// 페이지 시작 레코드(tuple)
 	private int end;		// 페이지 끝 레코드(tuple)
-	
 	private int rn;
+	private int nbno;
 	private int bno;
 	private int bref;
 	private int bstep;

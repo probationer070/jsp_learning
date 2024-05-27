@@ -23,7 +23,7 @@
 					<span class="btn btn-outline-primary">전체 게시글 수 ${totArticle} 건</span>
 				</div>
 				<table class="table table-hover text-center table-bordered table-striped">
-					<thead class="table-primary">
+					<thead class="table-primary" style="background: #111">
 						<tr>
 							<th style="width: 15%">번호</th>
 							<th style="width: 40%">제목</th>
