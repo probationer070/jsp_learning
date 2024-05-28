@@ -1,18 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="board1.model.BoardDAO">
-<select id="getArticles" resultType="bvo" parameterType="pvo">
+<select id="getArticles" resultType="bvo" parameterType="bvo">
     SELECT * FROM 
 	(SELECT ROWNUM RN, A.* FROM 
 	(SELECT BNO, BREF, BSTEP, BLEVEL,READCOUNT,
 	SUBJECT, CONTENT, WRITER, REGDATE, IP, PASSWD
     FROM BOARD_LIST 
-    ORDER BY BREF DESC, BNO, BLEVEL) A )            	           
-	WHERE RN BETWEEN #{start} AND #{end}
+    <if test="items!=null and items!='' and text!=null">
+    	WHERE ${items} LIKE '%'||#{text}||'%'
+    </if>
+    ORDER BY BREF DESC, BNO, BLEVEL) A )
+    <choose>
+    	<when test="bno!=0">
+    		WHERE BNO=#{bno}
+    	</when>
+    	<otherwise>
+			WHERE RN BETWEEN #{start} AND #{end} 
+    	</otherwise>
+    </choose>         	           
 </select>
 
-<select id="getTotArticleCnt" resultType="int">
+<select id="getTotArticleCnt" resultType="int" parameterType="bvo">
 	SELECT COUNT(BNO) FROM BOARD_LIST
+	<if test="items!=null and items!='' and text!=null">
+		WHERE ${items} LIKE '%'||#{text}||'%'
+	</if>
 </select>
 
 <insert id="writePro" parameterType="bvo">
@@ -34,9 +47,15 @@
 		#{readcount},#{subject},#{content},#{writer},TO_CHAR(SYSDATE,'YYYY/MM/DD(HH:MM:SS)'),#{ip},#{passwd})
 </insert>
 
-<select  id="getContent" parameterType="int" resultType="bvo">
+
+<update id="upCount" parameterType="bvo">
+	UPDATE BOARD_LIST SET READCOUNT = READCOUNT+1 WHERE BNO = #{bno}
+</update>
+
+<!-- <select id="getContent" parameterType="int" resultType="bvo">
 	SELECT * FROM BOARD_LIST WHERE BNO = #{bno}
-</select>
+</select> -->
+
 
 <update id="updatePro" parameterType="bvo">
 	UPDATE BOARD_LIST SET SUBJECT=#{subject}, CONTENT=#{content}, WRITER=#{writer},

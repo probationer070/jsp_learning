@@ -23,8 +23,8 @@ public class BoardDaoImpl implements BoardDAO {
 	}
 
 	@Override
-	public int getTotArticleCnt() {
-		return sqlSession.selectOne(namespace + "getTotArticleCnt");
+	public int getTotArticleCnt(BoardDTO bdto) {
+		return sqlSession.selectOne(namespace + "getTotArticleCnt", bdto);
 	}
 
 	@Override
@@ -34,10 +34,15 @@ public class BoardDaoImpl implements BoardDAO {
 	}
 
 	@Override
-	public BoardDTO getContent(int bno) {
-		return (BoardDTO) sqlSession.selectOne(namespace + "getContent", bno);
+	public BoardDTO getContent(BoardDTO bdto) {
+		return (BoardDTO) sqlSession.selectOne(namespace + "getArticles", bdto);
 	}
 
+	@Override
+	public void upCount(BoardDTO bdto) {
+		sqlSession.update(namespace + "upCount", bdto);
+	}
+	
 	@Override
 	public int updatePro(BoardDTO bdto) {
 		return sqlSession.update(namespace + "updatePro", bdto);
@@ -47,6 +52,7 @@ public class BoardDaoImpl implements BoardDAO {
 	public int deletePro(int bno) {
 		return sqlSession.delete(namespace + "deletePro", bno);
 	}
+
 
 
 

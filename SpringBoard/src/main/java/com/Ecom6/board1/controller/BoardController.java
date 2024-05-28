@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.Ecom6.board1.Service.BoardService;
 import com.Ecom6.board1.model.BoardDTO;
+import com.Ecom6.board1.model.InterPginfo;
 import com.Ecom6.board1.model.PageDTO;
 
 @Controller
@@ -31,16 +32,20 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/boardlist")
-	public String article_list(HttpServletRequest req, HttpServletResponse res, Model model, PageDTO pdto) {
-		logger.info("리스트에 들어옴"+ pdto.toString());
+	public String article_list(HttpServletRequest req, HttpServletResponse res, 
+			Model model, PageDTO pdto, BoardDTO searchDto) {
+	
+		logger.info("text ==> "+ searchDto.toString());
 		// 서비스 호출
-		Map<String, Object> reMap = boardService.getArticles(pdto);
+		Map<String, Object> reMap = boardService.getArticles(searchDto, pdto);
 		
 		// 결과를 가져오면
 		// model에 저장		
 		model.addAttribute("totArticle", reMap.get("totArticle"));
 		model.addAttribute("articles", reMap.get("articles"));
 		model.addAttribute("pdto", reMap.get("pdto"));
+		model.addAttribute("sdto", searchDto);
+		model.addAttribute("pblock", InterPginfo.PAGE_OF_BLOCK);
 		
 		return "boardlist";
 	}	
@@ -50,7 +55,7 @@ public class BoardController {
 							Model model, PageDTO pdto, BoardDTO bdto) {
 		model.addAttribute("article", bdto);
 		model.addAttribute("pdto", pdto);
-		return "write";
+		return "writeForm";
 	}	
 
 	@RequestMapping(value = "/writePro")
@@ -67,18 +72,20 @@ public class BoardController {
 			msg = "게시글 등록 실패\\n관리자에게 문의";
 		}
 		
-		model.addAttribute("newView", "boardlist");
+		model.addAttribute("newView", "boardlist?curPg="+pdto.getCurPg()+"&curBlock="+pdto.getCurBlock());
 		model.addAttribute("msg", msg);
-		model.addAttribute("article", bdto);
+		// model.addAttribute("article", bdto);
 		model.addAttribute("pdto", pdto);
 		return "MsgPage";
 	}	
 	
-	@RequestMapping(value = "/content")
+	@RequestMapping(value = "/Content")
 	public String content(HttpServletRequest req, HttpServletResponse res, 
 							Model model, PageDTO pdto, BoardDTO bdto) {
-		int bno = Integer.parseInt(req.getParameter("bno"));
-		BoardDTO article = boardService.getContent(bno);
+		// int bno = Integer.parseInt(req.getParameter("bno"));
+		// BoardDTO article = boardService.getContent(bno);
+		BoardDTO article = boardService.getContent(bdto);
+
 		
 		model.addAttribute("article", article);
 		model.addAttribute("pdto", pdto);
@@ -88,10 +95,8 @@ public class BoardController {
 	@RequestMapping(value = "/update")
 	public String update(HttpServletRequest req, HttpServletResponse res, 
 							Model model, PageDTO pdto, BoardDTO bdto) {
-		int bno = Integer.parseInt(req.getParameter("bno"));
-		BoardDTO article = boardService.getContent(bno);
 		
-		model.addAttribute("article", article);
+		model.addAttribute("article", bdto);
 		model.addAttribute("pdto", pdto);
 		return "Update";
 	}	
@@ -101,6 +106,8 @@ public class BoardController {
 			Model model, PageDTO pdto, BoardDTO bdto) {
 		bdto.setIp(req.getRemoteAddr());
 		int	r = boardService.updatePro(bdto);
+		logger.info("r -> "+r);
+		
 		String msg = "";
 		
 		if (r > 0) {
@@ -109,11 +116,11 @@ public class BoardController {
 			msg = "게시글 수정 실패\\n관리자에게 문의";
 		}
 		
-		model.addAttribute("newView", "boardlist");
 		model.addAttribute("msg", msg);
-		model.addAttribute("article", bdto);
+		model.addAttribute("newView", "boardlist?curPg="+pdto.getCurPg()+"&curBlock="+pdto.getCurBlock());
+		// model.addAttribute("article", bdto);
 		model.addAttribute("pdto", pdto);
-		return "Update";
+		return "MsgPage";
 	}
 	
 	@RequestMapping(value = "/deletePro")

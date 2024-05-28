@@ -62,7 +62,7 @@
 				
 				<input type="hidden" name="curPg" value="${pdto.curPg}" />
 				<input type="hidden" name="curBlock" value="${pdto.curBlock}" />
-				<input type="text" name="bno" value="${article.bno}" />
+				<input type="hidden" name="bno" value="${article.bno}" />
 				<input type="hidden" name="bref" value="${article.bref}" />
 				<input type="hidden" name="blevel" value="${article.blevel}" />
 				<input type="hidden" name="bstep" value="${article.bstep}" />

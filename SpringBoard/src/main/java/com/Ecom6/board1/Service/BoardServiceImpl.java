@@ -24,69 +24,66 @@ public class BoardServiceImpl implements BoardService {
 	private BoardDAO boardDAO;
 	
 	@Override
-	public Map<String, Object> getArticles(PageDTO pdto) {
-		Map<String, Object> remap = new HashMap<String, Object>();
+	public Map<String, Object> getArticles(BoardDTO bdto, PageDTO pdto) {
+		
 		// 데이터 베시읏에서 데이터 가져오기
 		// 페이지 계산
 		// 전체 총 라인 수
-		int totArticle = boardDAO.getTotArticleCnt();
+		int totArticle = boardDAO.getTotArticleCnt(bdto);
+		int totRecordCnt = boardDAO.getTotArticleCnt(null);
 		
 		// 현재 페이지를 받고 
 		// 페이지를 가지고 계산
-		int start, end;
-		start = (pdto.getCurPg() - 1) * InterPginfo.ROW_OF_PAGE + 1;
-		end = (pdto.getCurPg() * InterPginfo.ROW_OF_PAGE) > totArticle ? 
-				totArticle: (pdto.getCurPg() * InterPginfo.ROW_OF_PAGE);
-		BoardDTO bdto = new BoardDTO();
-		bdto.setStart(start);
-		bdto.setEnd(end);
-		// start page, end page
+		logger.info(pdto.toString());
 		
-		// PageNav
-		// 현 레코드수 페이지당 라인수로 나누면 총 페이지 수
-		
-		pdto.setStartPage((pdto.getCurBlock()-1)+1);
-		int pgCnt = (totArticle % InterPginfo.ROW_OF_PAGE == 0) ?
-				totArticle / InterPginfo.ROW_OF_PAGE: totArticle/InterPginfo.ROW_OF_PAGE+1;
-		
-		pdto.setPgCnt(pgCnt);	// 총페이지 수
+		int strat = ((pdto.getCurPg()-1)*InterPginfo.ROW_OF_PAGE)+1;
+        int end = (pdto.getCurPg()* InterPginfo.ROW_OF_PAGE) > totArticle?		 
+       		   totArticle: (pdto.getCurPg()* InterPginfo.ROW_OF_PAGE);
+		 //start page, and page
+		 bdto.setStart(strat);
+		 bdto.setEnd(end);
+		 
+		// 총 페이지 수
+		 int pgcnt = totArticle%InterPginfo.ROW_OF_PAGE==0 ?
+				     totArticle/InterPginfo.ROW_OF_PAGE: 
+					 totArticle/InterPginfo.ROW_OF_PAGE+1;
 		
 		// 총페이지 블록 수 -> 페이지 수 / 블럭당 페이지 수 나머지가 0 이면 몫으로 그렇지 않은 경우 +1
-		int blCnt = pdto.getPgCnt() % InterPginfo.PAGE_OF_BLOCK == 0 ?
-					pdto.getPgCnt() / InterPginfo.PAGE_OF_BLOCK:
-					pdto.getPgCnt() / InterPginfo.PAGE_OF_BLOCK+1;
-		pdto.setBlockCnt(blCnt);	// 페이지 블럭 수
-		
-		if (pdto.getCurBlock() > 1) {
-			// 현재 페이지 블록
-			int endpg = (pdto.getCurBlock() * InterPginfo.PAGE_OF_BLOCK)> pdto.getPgCnt() ?
-						pdto.getPgCnt() : pdto.getCurBlock() * InterPginfo.PAGE_OF_BLOCK;
-					
-			pdto.setEndPage(endpg);
-		} else {
-			pdto.setStartPage(1);
-			int endpg = 1*InterPginfo.PAGE_OF_BLOCK > pdto.getPgCnt()?
-					pdto.getPgCnt(): 1*InterPginfo.PAGE_OF_BLOCK;
-			pdto.setEndPage(endpg);
-			logger.info("endpg==> "+endpg);
-		}
+		 int blcnt =(pgcnt%InterPginfo.PAGE_OF_BLOCK==0)?
+				     pgcnt/InterPginfo.PAGE_OF_BLOCK:
+				     pgcnt/InterPginfo.PAGE_OF_BLOCK+1; 
+		 int startPg =(pdto.getCurBlock()-1)*InterPginfo.PAGE_OF_BLOCK+1;
+		 
+		// 현재 페에지 블록
+		int  endpg = (pdto.getCurBlock()*InterPginfo.PAGE_OF_BLOCK)>pgcnt?
+				pgcnt: pdto.getCurBlock()*InterPginfo.PAGE_OF_BLOCK; 	
+			
 
+		pdto.setPgCnt(pgcnt);	// 총페이지 수
+		pdto.setBlockCnt(blcnt);	
+		pdto.setStartPage(startPg);
+		pdto.setEndPage(endpg);
+		
+		Map<String, Object> remap = new HashMap<String, Object>();
 		List<BoardDTO> articles = boardDAO.getArticles(bdto);
 		remap.put("articles", articles);
 		remap.put("totArticle", totArticle);
 		remap.put("pdto", pdto);
+		logger.info(pdto.toString());
+		
 		return remap;
 	}
 	
-	@Transactional
 	@Override
 	public int writePro(BoardDTO bdto) {
 		return boardDAO.writePro(bdto);
 	}
-
+	
+	@Transactional
 	@Override
-	public BoardDTO getContent(int bno) {
-		return boardDAO.getContent(bno);
+	public BoardDTO getContent(BoardDTO bdto) {	
+		boardDAO.upCount(bdto);
+		return boardDAO.getContent(bdto);
 	}
 
 	@Override

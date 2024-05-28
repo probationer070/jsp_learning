@@ -12,6 +12,7 @@
         <typeAlias alias="hashMap" type="java.util.HashMap" />
         <typeAlias alias="map" type="java.util.Map" />
         <typeAlias alias="bvo" type="com.Ecom6.board1.model.BoardDTO" />
+        <typeAlias alias="uvo" type="com.Ecom6.board1.model.UserVO" />
         <typeAlias alias="pvo" type="com.Ecom6.board1.model.PageDTO" />
     </typeAliases>   
 </configuration>

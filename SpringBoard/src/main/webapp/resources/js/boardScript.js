@@ -49,7 +49,10 @@ $(function(){
 	})
 	
 	$('#searchBtn').on('click', function() {
-		$("form[name=form1]").attr('action', "boardlist");
+		var curPg = document.form1.curPg.value;
+		var curBlock = document.form1.curBlock.value;
+		var url = "boardlist?curPg="+curPg+"&curBlock="+curBlock;
+		$("form[name=form1]").attr('action', url);
 		$("form[name=form1]").submit();			
 	})
 	
@@ -85,7 +88,7 @@ function chkValidate() {
 function callContent(bno) {
 	// alert(bno);
 	var f = document.form1;
-	f.action = 'content';
+	f.action = 'Content';
 	f.bno.value = bno;
 	f.submit();
 }
