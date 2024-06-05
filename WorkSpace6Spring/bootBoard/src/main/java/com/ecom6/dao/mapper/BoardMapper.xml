@@ -4,6 +4,9 @@
 <mapper namespace="com.ecom6.dao.BoardDao">
 <select id="TotArticle" resultType="int" parameterType="bvo">
 	SELECT COUNT(BNO) FROM BOARD_LIST
+	<if test="items != null and items != '' and text != null and text != ''">
+		WHERE ${items} LIKE '%'||#{text}||'%'
+	</if>
 </select>
 
 <select id="getBoardList" resultType="bvo" parameterType="bvo">
@@ -12,18 +15,56 @@
 	(SELECT BNO, BREF, BSTEP, BLEVEL,READCOUNT,
 	SUBJECT, CONTENT, WRITER, REGDATE, IP, PASSWD
     FROM BOARD_LIST 
-    <!-- <if test="items!=null and items!='' and text!=null">
+    <!-- 검색에 해당하는  item와 text 들어올 때 where절에 검색으로 넣는다 -->
+    <if test="items!=null and items!='' and text!=null and text!=''">
     	WHERE ${items} LIKE '%'||#{text}||'%'
-    </if> -->
+    </if>
     ORDER BY BREF DESC, BNO, BLEVEL) A )
-	WHERE RN BETWEEN #{start} AND #{end} 
-    <!-- <choose>
+    <choose>
     	<when test="bno!=0">
     		WHERE BNO=#{bno}
     	</when>
     	<otherwise>
+			WHERE RN BETWEEN #{start} AND #{end} 
     	</otherwise>
-    </choose> -->         	           
+    </choose>            	           
 </select>
+
+<insert id="writePro" parameterType="bvo">
+  	<selectKey keyProperty="nbno" resultType="int" order="BEFORE">
+		SELECT NVL(MAX(BNO), 0)+1 FROM BOARD_LIST
+	</selectKey>
+	
+	INSERT INTO BOARD_LIST(BNO, BREF, BSTEP, BLEVEL, READCOUNT,
+				SUBJECT, CONTENT, WRITER, REGDATE, IP, PASSWD)
+	VALUES(#{nbno},
+	  <choose>
+	  	<when test="bref == null or bref == 0">
+	  		#{nbno}, 0, 0,
+	  	</when>
+	  	<otherwise>
+	  		#{bref}, #{bstep}+1, #{blevel}+1,
+	  	</otherwise>
+	  </choose>	
+		0,#{subject},#{content},#{writer},TO_CHAR(SYSDATE,'YYYY/MM/DD(HH:MM:SS)'),#{ip},#{passwd})
+</insert>
+
+<update id="upCount" parameterType="bvo">
+	UPDATE BOARD_LIST SET READCOUNT = READCOUNT+1 WHERE BNO = #{bno}
+</update>
+
+<select id="getContent" parameterType="int" resultType="bvo">
+	SELECT * FROM BOARD_LIST WHERE BNO = #{bno}
+</select>
+
+<update id="updatePro" parameterType="bvo">
+	UPDATE BOARD_LIST SET SUBJECT=#{subject}, CONTENT=#{content}, WRITER=#{writer},
+	REGDATE=TO_CHAR(SYSDATE, 'YYYY/MM/DD(HH:MM:SS)'), PASSWD=#{passwd}, IP=#{ip}
+	WHERE BNO=#{bno}
+</update>
+
+<delete id="deletePro" parameterType="int">
+	DELETE FROM BOARD_LIST WHERE BNO = #{bno}
+</delete>
 
 </mapper>

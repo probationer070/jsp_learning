@@ -12,4 +12,14 @@ public interface BoardDao {
 	int TotArticle(BoardVo bvo);
 
 	List<BoardVo> getBoardList(BoardVo bvo);
+
+	int writePro(BoardVo bvo);
+
+	void upCount(BoardVo bvo);
+
+	BoardVo getContent(BoardVo bvo);
+
+	int updatePro(BoardVo bvo);
+
+	int deletePro(int bno);
 }

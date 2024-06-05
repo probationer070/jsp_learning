@@ -23,4 +23,6 @@ public class BoardVo {
 	private String regdate;
 	private String ip;
 	private String passwd;
+	private String items;
+	private String text;
 }

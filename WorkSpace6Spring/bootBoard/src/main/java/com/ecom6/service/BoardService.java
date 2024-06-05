@@ -9,4 +9,12 @@ public interface BoardService {
 
 	public Map<String, Object> getBoardList(BoardVo bvo, PageVo pvo);
 
+	public int writePro(BoardVo bvo);
+
+	public BoardVo getContent(BoardVo bvo);
+
+	public int updatePro(BoardVo bvo);
+
+	public int deletePro(int bno);
+
 }

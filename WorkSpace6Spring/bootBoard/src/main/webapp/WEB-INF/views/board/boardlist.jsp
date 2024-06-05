@@ -9,29 +9,6 @@
 <link rel="stylesheet" href="static/css/border.css" />
 <script src="static/js/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="static/js/boardScript.js"></script>
-<script type="text/javascript">
-	$(function () {
-		$('#Logout').on("click", function() {
-			$("form[name=form1]").attr('action', "member/logout")
-			$("form[name=form1]").submit();									
-		})
-		
-		$('#Login').on("click", function() {
-			$("form[name=form1]").attr('action', "member/login")
-			$("form[name=form1]").submit();									
-		})
-
-		$('#arti').on("click", function() {
-			var s = '${user}';
-			alert(s);
-			if(s.length == 0) {
-				alert("로그인이 필요합니다.");
-				return 0;
-			}
-			return false;
-		}) 
-	})
-</script>
 </head>
 <body>
 <div class="container py-4">
@@ -43,16 +20,7 @@
 		<form action="" method="post" name="form1">
 			<div style="padding-top: 20px;" align="center">
 				<div class="text_end text-right mb-2" style="text-align: right;">
-					<span class="btn btn-outline-primary">전체 게시글 수 ${totArticle} 건</span>
-					
-					<%-- <c:choose>
-						<c:when test="${empty user}">
-							<span class="btn btn-outline-success" id="Login">Login</span>
-						</c:when>
-						<c:otherwise>
-							<span class="btn btn-outline-danger" id="Logout">Logout</span>
-						</c:otherwise>
-					</c:choose> --%>
+					<span class="btn btn-primary">게시글 수 ${totArticle} 건</span>
 				
 				</div>
 				<table class="table table-hover text-center table-bordered table-striped">
@@ -109,20 +77,20 @@
 					</a>				
 				</div>
 			</div>
-	       	<%-- <input type="hidden" name="bno" value="0">
-			<input type="hidden" name="curPg" value="${pdto.curPg}" />
-			<input type="hidden" name="curBlock" value="${pdto.curBlock}" />
+	       	<input type="hidden" name="bno" value="0">
+			<input type="hidden" name="curPg" value="${pvo.curPg}" />
+			<input type="hidden" name="curBlock" value="${pvo.curBlock}" />
 			<div align="center">
-				<c:if test="${pdto.startPage>pblock}">
+				<c:if test="${pvo.startPage>pblock}">
 					<font color="4c5317">
-						<a href="boardlist?curPg=${pdto.startPage-pblock}&curBlock=${pdto.curBlock-1}">[이전]</a>
+						<a href="boardList?curPg=${pvo.startPage-pblock}&curBlock=${pvo.curBlock-1}">[이전]</a>
 					</font>
 				</c:if>
-				<c:forEach var="pno" begin="${pdto.startPage}" end="${pdto.endPage}" step="1">
-					<c:set scope="page" var="list" value="./boardlist?curPg=${pno}&curBlock=${pdto.curBlock}&items=${sdto.items}&text=${sdto.text}"/>
+				<c:forEach var="pno" begin="${pvo.startPage}" end="${pvo.endPage}" step="1">
+					<c:set scope="page" var="list" value="./boardList?curPg=${pno}&curBlock=${pvo.curBlock}&items=${svo.items}&text=${svo.text}"/>
 					<a href="${list}" >
 						<c:choose>
-							<c:when test="${pdto.curPg == pno}">
+							<c:when test="${pvo.curPg == pno}">
 								<font color=" 4c5317" style="font-weight: bold">[${pno}]</font>
 							</c:when>
 							<c:otherwise>
@@ -131,16 +99,16 @@
 						</c:choose>
 					</a>
 				</c:forEach>
-				<c:if test="${pdto.endPage < pdto.pgCnt}">
+				<c:if test="${pvo.endPage < pvo.pgCnt}">
 					<font color="4c5317">
-						<a href="boardlist?curPg=${pdto.startPage + pblock}&curBlock=${pdto.curBlock+1}">[다음]</a>
+						<a href="boardList?curPg=${pvo.startPage + pblock}&curBlock=${pvo.curBlock+1}">[다음]</a>
 					</font>
 				</c:if>
 			</div>
 			<div class="mt-5 d-inline-flex justify-content-between" style="width: 350px; float:left">
 				<script type="text/javascript">
 				$(function() {
-					var items='${sdto.items}';
+					var items='${svo.items}';
 					if(items!=null && items!='')
 						$('#searchText').val(items);
 				})
@@ -151,9 +119,9 @@
 					<option value="content">본문에서</option>
 					<option value="writer">글쓴이에서</option>
 				</select> 
-				<input id="text" name="text" type="text" value="${sdto.text}"/> 
+				<input id="text" name="text" type="text" value="${svo.text}"/> 
 				<input type="button" id="searchBtn" class="btn btn-primary btn-sm" value="검색"/>		
-			</div> --%>
+			</div> 
 			</form>
 		</div>
 	</div>
