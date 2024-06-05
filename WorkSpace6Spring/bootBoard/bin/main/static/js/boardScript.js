@@ -12,7 +12,7 @@ $(function(){
 	$('#callList').on('click', function(){
 		var curPg = document.form1.curPg.value;
 		var curBlock = document.form1.curBlock.value;
-		location.href = "boardlist?curPg="+curPg+"&curBlock="+curBlock;
+		location.href = "boardList?curPg="+curPg+"&curBlock="+curBlock;
 	})
 
 	$('#reply').on('click', function(){
@@ -51,7 +51,7 @@ $(function(){
 	$('#searchBtn').on('click', function() {
 		var curPg = document.form1.curPg.value;
 		var curBlock = document.form1.curBlock.value;
-		var url = "boardlist?curPg="+curPg+"&curBlock="+curBlock;
+		var url = "boardList?curPg="+curPg+"&curBlock="+curBlock;
 		$("form[name=form1]").attr('action', url);
 		$("form[name=form1]").submit();			
 	})
@@ -86,7 +86,6 @@ function chkValidate() {
 }
 
 function callContent(bno) {
-	// alert(bno);
 	var f = document.form1;
 	f.action = 'Content';
 	f.bno.value = bno;
