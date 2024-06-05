@@ -29,7 +29,7 @@
 								<c:choose>
 									<c:when test="${article!=null && article.bno!=0}">
 										<input name="subject" class="form-control-plaintext chk" 
-											title="제목" placeholder="제목을 입력하시오." value="[답글]">	
+											title="제목" placeholder="[답글] 제목을 입력하시오." value="" >	
 									</c:when>
 									<c:otherwise>
 										<input name="subject" class="form-control-plaintext chk" 

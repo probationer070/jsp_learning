@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,7 +58,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("/writeForm")
-	public String writeFormReply(Model model, PageVo pvo, BoardVo bvo) {
+	public String ReplyForm(Model model, PageVo pvo, BoardVo bvo) {
 		model.addAttribute("article", bvo);
 		model.addAttribute("pvo", pvo);
 		return "board/writeForm";
@@ -69,15 +70,14 @@ public class BoardController {
 
 		bvo.setIp(req.getRemoteAddr());
 		boardService.writePro(bvo);
-		
 		model.addAttribute("pvo", pvo);
 		return "redirect:/boardList";
 	}
 	
+	@Transactional
 	@PostMapping(value = "/Content")
 	public String content(Model model, PageVo pvo, BoardVo bvo) {
 		BoardVo article = boardService.getContent(bvo);
-
 		model.addAttribute("article", article);
 		model.addAttribute("pvo", pvo);
 		return "board/Content";

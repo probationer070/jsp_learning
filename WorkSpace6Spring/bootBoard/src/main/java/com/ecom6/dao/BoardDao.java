@@ -17,8 +17,6 @@ public interface BoardDao {
 
 	void upCount(BoardVo bvo);
 
-	BoardVo getContent(BoardVo bvo);
-
 	int updatePro(BoardVo bvo);
 
 	int deletePro(int bno);

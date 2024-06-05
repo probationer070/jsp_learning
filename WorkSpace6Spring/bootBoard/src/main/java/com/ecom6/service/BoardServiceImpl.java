@@ -72,7 +72,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public BoardVo getContent(BoardVo bvo) {
 		boardDao.upCount(bvo);
-		return boardDao.getContent(bvo);
+		return boardDao.getBoardList(bvo).get(0);
 	}
 
 	@Override
