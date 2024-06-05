@@ -5,6 +5,9 @@
 $(function(){
 	$('#sendSubmit').on("click", function() {
 		if (chkValidate()) {
+			var name = document.form1.subject.value;
+			fixed = "[답글] " + name;
+			document.form1.subject.value = fixed;
 			document.form1.submit();
 		}
 	})
