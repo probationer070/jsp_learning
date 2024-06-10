@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ecom6.dao.mem.MemberDao">
+	<select id="getMember" parameterType="mvo" resultType="mvo">
+		SELECT MEM_ID, M_PASSWD, M_NAME, M_EMAIL, M_PHONE, ZIPCODE
+			ADDRESS, ADDRESS2, M_JOB, M_ROLE, M_REGDATE 
+		FROM MEMBER
+		WHERE MEM_ID=#{mem_id} AND M_PASSWD=#{m_passwd}
+	</select>
+	<select id="idCheck" parameterType="string" resultType="int">
+		SELECT COUNT(*) FROM MEMBER
+		WHERE MEM_ID = #{mem_id}
+	</select>
+</mapper>

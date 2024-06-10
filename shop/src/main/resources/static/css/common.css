@@ -1,0 +1,100 @@
+@charset "UTF-8";
+@media all and (min-width: 992px) and (max-width:1023px) {
+	body {
+		font-size: 18px;
+		margin: 0;
+		padding: 0;
+	}
+	.item {
+		font-size: 18px;
+	}
+}
+
+/* 태블릿 */
+@media all and (min-width:768px) and (max-width: 991px) {
+	body {
+		font-size: 16px;
+		margin: 0;
+		padding: 0;
+	}
+	.item {
+		font-size: 16px;
+	}
+}
+
+/* 모바일 */
+@media (min-width: 767px) {
+	body {
+		font-size: 14px;
+		margin: 0;
+		padding: 0;
+	}
+	.item {
+		font-size: 14px;
+	}
+}
+
+/* 모바일 가로, 태블릿 세로 (해상도 ~ 479px) */
+@media all and (min-width: 479px) {
+	body {
+		font-size: 14px;
+		margin: 0;
+		padding: 0;
+	}
+	.item {
+		font-size: 14px;
+	}
+}
+
+.BigConatiner {
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+}
+
+.container {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	width: 80%;
+}
+
+.MainCont {
+	grid-column-start: 2;
+    grid-column-end: span 3;
+}
+
+/* .MainCont contents {
+	display: flex;
+} */
+
+.AsideSign {
+	grid-column-start: 1;
+    grid-column-end: span 1;
+}
+
+.AsideSign aside {
+	display: flex;
+}
+
+ul {
+	list-style-type: none;
+}
+
+#main_menu > ul {
+	display: inline-flex;
+	margin: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.hidden {
+	display: none;
+}
+
+#submitTop img:hover {
+	opacity: 0.7;
+}

@@ -1,0 +1,130 @@
+@charset "UTF-8";
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.HeaderContainer {
+	width: 80%;
+	display: flex;
+	flex-flow: column;
+	
+}
+
+.head-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #000;
+}
+
+header {
+	background-color: #212529;
+	color: #ccc;
+	padding: 20px;
+	text-align: center;
+}
+
+#logo {
+	text-align:center;
+	width: 60px;
+	height: 60px;
+	align-content: center;
+}
+
+.login_form {
+	display: flex;
+	gap: 4px;
+	margin-top: 10px;
+}
+
+
+aside {
+    float: left;
+    /* background-color: #f0f0f0; */
+    height: calc(100vh - 90px); /* 화면 높이에서 header와 footer 높이를 빼서 사이드바의 높이를 계산합니다. */
+    overflow-y: auto; /* 내용이 넘칠 경우 스크롤 생성 */
+    padding: 0 10px;
+}
+
+.navbar-nav {
+	display: flex;
+}
+
+.nav-item > a {
+	text-decoration: none;
+    color: #fff;
+    font-weight: 900;
+}
+
+.nav-item > a:hover {
+	text-decoration: none;
+    color: #999;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    padding: 10px;
+}
+
+nav ul li a {
+    text-decoration: none;
+}
+
+#main_menu {
+	/* position: absolute;
+	margin-top: 40px;
+	height: 30px; */
+	background-color: #81c150;
+	margin-bottom: 10px;
+	display: flex;
+    justify-content: center;
+}
+
+#main_menu li a {
+	color: #000;
+}
+
+#main_menu li a:hover {
+	font-weight: bold;
+	color: #fff;
+}
+
+aside #login_box {
+	margin: 0 5px 0 10px;
+	padding: 4px 8px;
+	width: 210px;
+	height: 140px;
+	border: 1px solid #ddd;
+}
+
+aside #login-title {
+	margin: 10px 0 0 5px;
+}
+
+aside #login_input li input {
+	border: 1px solid #9b9b9b;
+	margin: 1px 0;
+	border-radius: 5px;
+	padding: 2px;
+	width: 120px;
+}
+
+aside #join_Search {
+	margin-top: 4px;
+	padding-top: 4px;
+	border-top: 1px solid #ddd;
+}
+
+
+
+/* main {
+    margin-left: 220px;
+    padding: 20px;
+} */
+ 
