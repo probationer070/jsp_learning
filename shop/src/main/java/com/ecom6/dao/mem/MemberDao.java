@@ -11,4 +11,6 @@ public interface MemberDao {
 
 	int idCheck(String mem_id);
 
+	int memberJoin(MemberVO mvo);
+
 }

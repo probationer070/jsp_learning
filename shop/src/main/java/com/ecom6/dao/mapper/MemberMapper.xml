@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ecom6.dao.mem.MemberDao">
 	<select id="getMember" parameterType="mvo" resultType="mvo">
-		SELECT MEM_ID, M_PASSWD, M_NAME, M_EMAIL, M_PHONE, ZIPCODE
+		SELECT MEM_ID, M_PASSWD, M_NAME, M_EMAIL, M_PHONE, ZIPCODE,
 			ADDRESS, ADDRESS2, M_JOB, M_ROLE, M_REGDATE 
 		FROM MEMBER
 		WHERE MEM_ID=#{mem_id} AND M_PASSWD=#{m_passwd}
@@ -11,4 +11,19 @@
 		SELECT COUNT(*) FROM MEMBER
 		WHERE MEM_ID = #{mem_id}
 	</select>
+	<insert id="memberJoin" parameterType="mvo">
+		INSERT INTO MEMBER(MEM_ID, M_PASSWD, M_NAME, M_EMAIL, M_PHONE, ZIPCODE,
+			ADDRESS, ADDRESS2, M_JOB, M_ROLE, M_REGDATE) 
+		values (#{mem_id}, 
+				#{m_passwd}, 
+				#{m_name},
+				#{m_email}, 
+				#{m_phone}, 
+				#{zipcode},
+				#{address}, 
+				#{address2},
+				#{m_job},
+				'mem', 
+				SYSDATE)
+	</insert>
 </mapper>

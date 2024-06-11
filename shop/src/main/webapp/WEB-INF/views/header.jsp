@@ -31,9 +31,18 @@
 	                <li class="nav-item active">
 	                    <a href="/">Home <span class="sr-only">(current)</span></a>
 	                </li>
-	                <li class="nav-item">
-	                    <a href="/login">Login</a>
-	                </li>
+	                <c:choose>
+		             	<c:when test="${ssKey==null}">
+			                <li class="nav-item">
+			                    <a href="/login">Login</a>
+			                </li>
+			            </c:when>
+			            <c:otherwise>
+			            	<li class="nav-item">
+			                    <a href="/logoutProc">logout</a>
+			                </li>
+			            </c:otherwise>
+		            </c:choose>
 	                <li class="nav-item">
 	                    <a href="/info">Info</a>
 	                </li>

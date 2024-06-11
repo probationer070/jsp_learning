@@ -22,4 +22,9 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.idCheck(mem_id);
 	}
 
+	@Override
+	public int memberJoin(MemberVO mvo) {
+		return memberDao.memberJoin(mvo);
+	}
+
 }

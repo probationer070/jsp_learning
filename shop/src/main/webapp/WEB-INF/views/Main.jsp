@@ -56,9 +56,7 @@
         	</div>
 			<div class="MainCont">
 	            <div id="contents">
-	            	<img src="/images/xp.gif" style="width: 100%;" />
-	            	<h2>TEST</h2>
-	            	<p>awoeigawelgiawo;eigjawlekmgoaiwevaoieflkawnefoim;weflkawmeofiwefo</p>
+	            	<c:import url="${content}"></c:import>
 	            </div>
 			</div>
         </div>
