@@ -10,9 +10,9 @@
 <body>
 	<article id="login_box">
 	<form name="LoginForm" action="" method="post">
-		<div id="login_buttonn">
+		<div id="login_button">
 		<c:choose>
-			<c:when test="${ssKey!=null or ssKey.m_role=='admin'}">
+			<c:when test="${ssKey!=null or ssKey.m_role=='mem'}">
 				<img id="login-title" src="/images/ttl_logOut.png"
 					style="height: 25px; border-radius: 5px;">
 			<div class="login_form">
@@ -25,7 +25,7 @@
 			</div>
 			</c:when>
 			<c:when test="${ssKey==null}">
-					<img id="login-title" src="/images/ttl_login.png"
+				<img id="login-title" src="/images/ttl_login.png"
 						style="height: 25px; border-radius: 5px;">
 				<div class="login_form">
 					<span id="submitTop"><img alt="login" id="login_btn" src="/images/btn_Login.gif"></span>
