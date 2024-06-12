@@ -6,16 +6,18 @@
 <head>
 <meta charset="UTF-8">
 <title>USER INFO</title>
+<link rel="stylesheet" type="text/css" href="css/signup.css" />
 </head>
 <body>
-<table class="signup-main">
+<form action="" name="form1" method="post">
+	<table class="signup-main">
 		<tr class="sign-title">
 			<th colspan="3">회원정보</th>
 		</tr>
 		<tr>
 			<th class="col1">아이디</th>
 			<th class="col2"><input type="text" name="mem_id" id="idchk" 
-									title="ID" class="chk" value="${mvo.mem_id}" readonly="readonly">
+				title="ID" class="chk" value="${mvo.mem_id}" readonly="readonly">
 			</th>
 		</tr>
 		<tr>
@@ -69,11 +71,12 @@
 		<tfoot>
 		<tr>
 			<td colspan="3" style="padding-top: 20px; text-align: center;">
-				<button type="button" id="submit2" class="btn-primary">정보 수정</button>
-				<button type="button" id="submit3" class="btn-primary">회원 탈퇴</button>
+				<button type="button" name="memUpdate" class="btn-primary submit2">정보 수정</button>
+				<button type="button" name="memDelete" class="btn-primary submit2">회원 탈퇴</button>
 			</td>
 		</tr>
 		</tfoot>
 	</table>
+</form>
 </body>
 </html>

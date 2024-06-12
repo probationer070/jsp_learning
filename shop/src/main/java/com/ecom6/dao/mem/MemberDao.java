@@ -13,4 +13,6 @@ public interface MemberDao {
 
 	int memberJoin(MemberVO mvo);
 
+	int memberUpdate(MemberVO mvo);
+
 }

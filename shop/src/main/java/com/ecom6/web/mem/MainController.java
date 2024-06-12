@@ -12,8 +12,22 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class MainController {
 	@GetMapping("/")
-	public String index(HttpServletRequest req, HttpServletResponse res) {
+	public String index(HttpServletRequest req, 
+						HttpServletResponse res) {
 		return "index";
 	}
+	
+	@GetMapping("/admin/")
+	public String admin(HttpServletRequest req, 
+			HttpServletResponse res) {
+		return "admin/index";
+	}
+	
+	@GetMapping("/pwCheck")
+	public String pwCheck(HttpServletRequest req, 
+						HttpServletResponse res) {
+		return "popup/pwCheck_popup";
+	}
+	
 	
 }

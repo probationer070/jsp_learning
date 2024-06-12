@@ -30,17 +30,14 @@ public class MemberController {
 		HttpSession session = req.getSession();
 		String msg = null;
 		String url = "/";
-		// 세션 확인
 		// 회원 정보 가져오기
-		log.info("test==>"+mvo.toString());
 		MemberVO svo = memberService.getMember(mvo);
 		
 		if (svo!=null) {
-			MemberVO ssKey = svo;
-			
-//			log.info(svo.toString()); 
-//			log.info(ssKey.toString());
-			 
+			if (svo.getM_role().equals("admin")) {
+				url = "/admin/";
+			}
+			MemberVO ssKey = svo; 
 			msg=svo.getM_name()+"님 반갑습니다.";
 			session.setAttribute("ssKey", ssKey);	
 		} else {
@@ -106,4 +103,44 @@ public class MemberController {
 		model.addAttribute("content", "member/Memberinfo.jsp"); 
 		return "Main";
 	}
+
+	@PostMapping("/memUpdateForm")
+	public String updateForm(HttpServletRequest req, Model model) {
+		HttpSession session = req.getSession();
+		MemberVO mvo = (MemberVO) session.getAttribute("ssKey");
+		model.addAttribute("mvo", mvo);
+		model.addAttribute("content", "member/UpdateForm.jsp"); 
+		return "Main";
+	}
+	
+	@Transactional
+	@PostMapping("/memUpdateProc")
+	public String memUpdateProc(
+			HttpServletRequest req, 
+			HttpServletResponse res,
+			MemberVO mvo, Model model) {
+		
+		HttpSession session = req.getSession();
+		
+		String msg = null;
+		
+		int r = memberService.memberUpdate(mvo);
+		if (r>0) {
+			msg = "수정 성공";
+		} else {
+			msg = "수정 실패";
+		}
+		
+		session.removeAttribute("ssKey");
+		session.invalidate();
+		model.addAttribute("url", "/");
+		model.addAttribute("msg", msg);
+		return "MsgPage";
+	}
+	
+	@GetMapping("/notice")
+	public String test() {
+		return "test";
+	}
+	
 }

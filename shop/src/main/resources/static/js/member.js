@@ -35,6 +35,19 @@ $().ready(function(){
 		}
 	})
 	
+	$('#submit3').on('click', function(){
+		if(!chkValidate('form1')){
+			return false;
+		} else {
+			if(!pwcheck) {	
+				alert("패스워드가 다릅니다.");
+				return false;
+			}			
+			$("form[name=form1]").submit();
+		}
+		
+	})
+	
 	$('#idchk').on('propertychange change paste input', function(){
 		$.ajax({
 			async:true,
@@ -74,6 +87,8 @@ $().ready(function(){
 			pwcheck=true;
 		}
 	});
+	
+	
 })
 
 function chkValidate(formNm) {
@@ -85,6 +100,26 @@ function chkValidate(formNm) {
 			alert($("form[name="+formNm+"] .chk").eq(i).attr('title')+' 은/는 필수입력입니다.');
 			$("form[name="+formNm+"] .chk").eq(i).focus();
 			return false;
+		}
+	}
+	
+	if(formNm =='form1'){
+		var str = $('input[name="m_email"]').val();
+		var atPos = str.indexOf('@');
+		var atLastPos = str.lastIndexOf('@');
+		var dotPos = str.indexOf('.');
+		var spacePos = str.indexOf(' ');
+		var commaPos = str.indexOf(',');
+		var eMailSize = str.length;
+		if(!(atPos > 1 && atPos==atLastPos && 
+			dotPos > 3 && spacePos==-1 && commaPos == -1 &&
+			atPos+1<dotPos && dotPos+1 < eMailSize)) {
+				//alert('Email 주소 형식이 잘못되었습니다.');
+				$('font[class=emailNm]').text('');
+				$('font[class=emailNm]').attr('color', 'red');
+				$('font[class=emailNm]').text('Email 주소 형식이 잘못되었습니다.');
+				document.form1.m_email.focus();
+				return false;
 		}
 	}
 	return true;

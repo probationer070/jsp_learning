@@ -10,4 +10,6 @@ public interface MemberService {
 
 	int memberJoin(MemberVO mvo);
 
+	int memberUpdate(MemberVO mvo);
+
 }

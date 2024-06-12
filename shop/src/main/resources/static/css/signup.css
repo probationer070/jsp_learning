@@ -19,9 +19,10 @@
 
 .input-state {
 	text-align: left;
+	padding-left: 20px;
 }
 
-#content td {
+#contents td {
 	padding-top: 20px;
     text-align: center;
 }
@@ -35,14 +36,19 @@
 
 .col2 {
 	text-align: left;
-	width: 40%;
+	width: 50%;
 	height: 40px;
 	padding-right: 5px;
 }
 
+.col3 {
+	text-align: left;
+	padding-left: 20px;
+}
+
 .col2 input {
 	width: 100%;
-	height: 35px;
+	padding: 8px;
 }
 
 .selector {

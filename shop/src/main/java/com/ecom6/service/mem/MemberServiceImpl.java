@@ -27,4 +27,9 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.memberJoin(mvo);
 	}
 
+	@Override
+	public int memberUpdate(MemberVO mvo) {
+		return  memberDao.memberUpdate(mvo);
+	}
+
 }

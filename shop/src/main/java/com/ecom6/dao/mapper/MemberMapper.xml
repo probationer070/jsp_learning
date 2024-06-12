@@ -26,4 +26,17 @@
 				'mem', 
 				SYSDATE)
 	</insert>
+	<update id="memberUpdate" parameterType="mvo">
+		UPDATE MEMBER SET
+		M_PASSWD=#{m_passwd}, 
+		M_NAME=#{m_name}, 
+		M_EMAIL=#{m_email}, 
+		M_PHONE=#{m_phone}, 
+		ZIPCODE=#{zipcode},
+		ADDRESS=#{address}, 
+		ADDRESS2=#{address2}, 
+		M_JOB=#{m_job}, 
+		M_REGDATE=SYSDATE
+		WHERE MEM_ID=#{mem_id}
+	</update>
 </mapper>
