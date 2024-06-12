@@ -1,0 +1,56 @@
+@charset "UTF-8";
+
+#content table {
+	margin: 0 auto;
+	width: 85%;
+	border: 1px solid #000;
+	border-collapse: collapse;
+}
+
+#content tr, #content th, #content td {
+	border: 1px solid #eee;
+}
+
+
+.sign-title th {
+	font-size: 28px;
+	padding-bottom: 30px;
+}
+
+.input-state {
+	text-align: left;
+	padding-left: 20px;
+}
+
+#contents td {
+	padding-top: 20px;
+    text-align: center;
+}
+
+.col1 {
+	text-align: right;
+	width: 20%;
+	height: 40px;
+	padding-right: 30px;
+}
+
+.col2 {
+	text-align: left;
+	width: 50%;
+	height: 40px;
+	padding-right: 5px;
+}
+
+.col3 {
+	text-align: left;
+	padding-left: 20px;
+}
+
+.col2 input {
+	width: 100%;
+	padding: 8px;
+}
+
+.selector {
+	height: 40px;
+}
