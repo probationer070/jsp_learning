@@ -55,6 +55,11 @@
 	font-size: 14px;
 }
 
+.btn-primary:hover {
+	background-color: #fff;
+	color: #000;
+}
+
 .BigConatiner {
 	display: flex;
 	flex-flow: column;
