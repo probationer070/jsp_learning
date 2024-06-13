@@ -6,7 +6,7 @@ $().ready(function(){
 	var idSubmitChk = 1; 
 	var pwcheck=false;
 	
-	$('#submitTop').on('click', function(){
+	$('#login_btn').on('click', function(){
 		if(chkValidate('LoginForm')) {
 			$("form[name=LoginForm]").attr('action', 'loginProc');
 			$("form[name=LoginForm]").submit();

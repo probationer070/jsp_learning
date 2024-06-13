@@ -13,5 +13,7 @@
         <typeAlias alias="map" type="java.util.Map" />
         <typeAlias alias="string" type="java.lang.String" />
         <typeAlias alias="mvo" type="com.ecom6.VO.mem.MemberVO" />
+        <typeAlias alias="pvo" type="com.ecom6.VO.product.ProductVO" />
+        <typeAlias alias="pgVo" type="com.ecom6.VO.PageVO" />
     </typeAliases>   
 </configuration>
