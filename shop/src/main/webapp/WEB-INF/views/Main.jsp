@@ -12,11 +12,25 @@
 <body>	
 	
 	<div class="BigConatiner">
-		<c:import url="./header.jsp" />
+		<c:choose>
+       		<c:when test="${ssKey.m_role=='admin'}">
+            	<c:import url="./admin/header.jsp" />
+       		</c:when>
+       		<c:otherwise>
+            	<c:import url="./header.jsp" />
+       		</c:otherwise>
+       	</c:choose>
         <div class="container">
         	<div class="AsideSign">
-		        <aside>					
-	            	<c:import url="./Aside.jsp"/>
+		        <aside>
+		        	<c:choose>
+		        		<c:when test="${ssKey.m_role=='admin'}">
+			            	<c:import url="./admin/Aside.jsp"/>
+		        		</c:when>
+		        		<c:otherwise>
+			            	<c:import url="./Aside.jsp"/>
+		        		</c:otherwise>
+		        	</c:choose>
 				</aside>
         	</div>
 			<div class="MainCont">

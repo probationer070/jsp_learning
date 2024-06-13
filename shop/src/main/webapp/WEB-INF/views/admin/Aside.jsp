@@ -31,7 +31,7 @@
 						<li><input type="text" name="mem_id" class="chk" title="아이디"></li>
 						<li><input type="password" name="m_passwd" class="chk" title="패스워드"></li>
 					</ul>
-					<span id="submitTop"><img alt="login" id="login_btn" src="/images/btn_Login.gif"></span>
+					<span id="login_btn"><img alt="login" id="login_btn" src="/images/btn_Login.gif"></span>
 				</div>	
 			</c:when>
 		</c:choose>

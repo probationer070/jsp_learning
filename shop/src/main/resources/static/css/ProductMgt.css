@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+table {
+	width: 100%;
+	text-align: center;
+}
+
+th, tr, td {
+	border: 1px solid #000;
+} 
+
+#productmgt {
+	padding: 10px 20px;
+}
+
+#productmgt h2 {
+	color: #0e6d1d;
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+#productmgt .totalitem {
+	margin-bottom: 10px;
+}
+
+.pcol1 { width: 15%; padding: 3px 3px 3px 3px;}
+.pcol2 { width: 30%; padding: 3px 3px 3px 10px; text-align: left;}
+.pcol3 { width: 15%; padding: 3px 3px 3px 3px;}
+.pcol4 { width: 30%; padding: 3px 3px 3px 3px;}
+.pcol5 { width: 10%; padding: 3px 3px 3px 3px;}
+
+.pcol2 input { width: 100%; padding: 8px;}
+
+input #file-upload-button { padding: 8px;}
+
+#productmgt .btnArea {
+	margin-top: 20px;
+	text-align: center;
+	width: 100%;
+}
+
+.btn-primary {
+	background-color: #000;
+	color: #fff; 
+	border: none;
+	border-radius: 10px;
+	padding: 8px 16px;
+	font-size: 14px;
+}
+
+.btn-primary:hover {
+	border: 1px solid #000;
+	background-color: #fff;
+	color: #000;
+}

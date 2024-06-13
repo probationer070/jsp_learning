@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ecom6.dao.product.ProductDao">
+	<select id="getProductCnt" resultType="int">
+		SELECT COUNT(P_NO) FROM PRODUCT
+	</select>
+
+	<select id="getProductList" resultType="pvo" parameterType="pgVo">
+		 SELECT P_NO, STOCK, PRICE, P_NAME, DETAIL, PR_DATE, IMAGE, PATH
+		 FROM PRODUCT	
+	</select>
+	
+	<insert id="insertProduct" parameterType="pvo">
+		<selectKey keyProperty="p_no" order="BEFORE" resultType="int">
+			SELECT NVL(MAX(P_NO),0)+1 FROM PRODUCT
+		</selectKey>
+		INSERT INTO PRODUCT(P_NO, STOCK, PRICE, P_NAME, DETAIL, PR_DATE, IMAGE, PATH)
+		VALUES(#{p_no}, #{stock}, #{price}, #{p_name}, #{detail}, SYSDATE, #{image}, #{path})
+	</insert>
+
+</mapper>
