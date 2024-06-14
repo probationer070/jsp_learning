@@ -1,8 +1,16 @@
 $().ready(function(){
+	
+	// admin 아이템 상세 페이지에서 뒤로가기 누르면 메인으로 이동
+	history.pushState(null, document.title, window.location.href);
+	history.replaceState(null, document.title, '/');
+	window.addEventListener('popstate', (e) => {
+		location.replace('/');
+	});
+	
 	$('.submit2').on('click', function(){
 		var choice = this.name;
 		// 팝업을 띄우고 비밀번호 확인
-		var _left = Math.ceil((window.screen.width - 400) / 2);
+		var _left = Math.ceil((window.screen.width - 600) / 2);
 		var _top = Math.ceil((window.screen.height - 200) / 2);
 		openWin = window.open("/pwCheck", "pwCheck",
 			"width=600, height=200, toolbar=no, menubar=no, left="+_left

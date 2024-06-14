@@ -62,7 +62,7 @@
 	<nav id="main_menu">
 		<ul>
 			<li><a href="/boardlist">자유게시판</a></li>
-			<li><a href="/productlist">상품목록</a></li>
+			<li><a href="/productList">상품목록</a></li>
 			<li><a href="/cartlist">장바구니</a></li>
 			<li><a href="/orderlist">구매목록</a></li>
 			<li><a>회원전용 게시판</a></li>

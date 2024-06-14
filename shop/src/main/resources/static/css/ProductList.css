@@ -2,24 +2,33 @@
 
 table {
 	width: 100%;
-	text-align: center;
+}
+
+.table {
+	display: flex;
+	justify-content: center;
+	gap: 40px;
+}
+
+.table td.cols {
+	padding: 10px;
 }
 
 /* th, tr, td {
 	border: 1px solid #000;
 }  */
 
-#productmgt {
+#product {
 	padding: 10px 20px;
 }
 
-#productmgt h2 {
+#product h2 {
 	color: #0e6d1d;
 	text-align: center;
 	margin-bottom: 10px;
 }
 
-#productmgt .totalitem {
+#product .totalitem {
 	margin-bottom: 10px;
 }
 
@@ -29,16 +38,24 @@ table {
 .pcol4 { width: 30%; padding: 3px 3px 3px 3px;}
 .pcol5 { width: 10%; padding: 3px 3px 3px 3px;}
 
+.pcol1-1 { width: 30%; padding: 3px 3px 3px 3px;}
+
+.pcol2-1 input {
+	padding: 8px;
+	object-fit: contain;
+}
+
 .pcol1 input, .pcol2 input, .pcol3 input , .pcol4 input , .pcol5 input   {
 	width: 100%;
 	padding: 8px;
+	object-fit: contain;
 }
 
 /* .pcol2 input { width: 100%; padding: 8px;} */
 
 input #file-upload-button { padding: 8px;}
 
-#productmgt .btnArea {
+#product .btnArea {
 	margin-top: 20px;
 	text-align: center;
 	width: 100%;

@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ecom6.VO.PageVO;
 import com.ecom6.VO.mem.MemberVO;
 import com.ecom6.VO.product.ProductVO;
+import com.ecom6.common.vo.PageVO;
 import com.ecom6.service.product.ProductService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,6 +32,8 @@ public class ProductController {
 	@Value("${resources.location}")
 	String resouresLocation;
 	
+	
+	// 어드민 전용
 	@GetMapping("/productMgt")
 	public String productMgt(HttpServletRequest req, 
 							HttpServletResponse res,
@@ -59,6 +61,28 @@ public class ProductController {
 		return page;
 	}
 	
+	// 고객전용
+	@GetMapping("/productList")
+	public String productList(HttpServletRequest req, 
+			HttpServletResponse res,
+			Model model, PageVO pgVo) {
+		String content=null;
+		MemberVO ssKey = null;
+		HttpSession session = req.getSession();
+		if (session.getAttribute("ssKey") != null) {
+			ssKey = (MemberVO) session.getAttribute("ssKey");
+			// session이 있을 때 받아서 저장
+			session.setAttribute("ssKey", ssKey);
+		}
+		Map<String, Object> reSet = productService.getProductsList(pgVo);
+		model.addAttribute("pcnt", reSet.get("pcnt"));
+		content = "custom/productList.jsp";
+		model.addAttribute("content", content);
+		model.addAttribute("productList", reSet.get("productList"));
+		model.addAttribute("pgVo", pgVo);
+		return "Main";
+	}
+	
 	@GetMapping("/productInForm")
 	public String productInForm(HttpServletRequest req, 
 								HttpServletResponse res,
@@ -71,15 +95,15 @@ public class ProductController {
 			// session이 있을 때 받아서 저장
 			session.setAttribute("ssKey", ssKey);
 			if (ssKey.getM_role().equals("admin")) {
-				model.addAttribute("content", "admin/ProductInForm.jsp");
-				page = "admin/productInForm";
+				model.addAttribute("content", "ProductInForm.jsp");
+				page = "admin/Main";
 			} else {
 				page = "redirect:/";	// 최초 화면으로 이동
 			}
 		} else {
 			page = "redirect:/";
 		}
-		return "Main";
+		return page;
 	}
 	
 	@PostMapping("productMgtProc")
@@ -127,4 +151,41 @@ public class ProductController {
 		model.addAttribute("url", url);
 		return "MsgPage";
 	}
+	
+	
+	@GetMapping("/productDetail")
+	public String productDetail(HttpServletRequest req, 
+								HttpServletResponse res,
+								Model model, ProductVO pvo) {
+		String page=null;
+		MemberVO ssKey = null;
+		String content = null;
+		HttpSession session = req.getSession();
+		ProductVO product = productService.productDetail(pvo);
+		if (session.getAttribute("ssKey") != null) {
+			ssKey = (MemberVO) session.getAttribute("ssKey");
+			// session이 있을 때 받아서 저장
+			session.setAttribute("ssKey", ssKey);
+			if (ssKey.getM_role().equals("admin")) {
+				content = "productDetail.jsp";
+				model.addAttribute("content", content);
+				page = "admin/Main";
+			} else {
+				model.addAttribute("content", "custom/productDetail.jsp");
+				page ="Main";
+			}
+		} else {
+//			page = "MsgPage";
+//			model.addAttribute("url", "login");
+//			model.addAttribute("msg", "로그인");
+			model.addAttribute("content", "custom/productDetail.jsp");
+			page ="Main";
+		}
+		model.addAttribute("product", product);
+
+		return page;
+	}
+	
+
+	
 }

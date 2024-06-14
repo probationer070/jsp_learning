@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ecom6.VO.PageVO;
 import com.ecom6.VO.product.ProductVO;
+import com.ecom6.common.vo.PageVO;
 import com.ecom6.dao.product.ProductDao;
 
 import lombok.extern.slf4j.Slf4j;
@@ -56,6 +56,11 @@ public class ProductServiceimpl implements ProductService {
 			}
 		}
 		return productDao.insertProduct(pvo);
+	}
+
+	@Override
+	public ProductVO productDetail(ProductVO pvo) {
+		return productDao.productDetail(pvo.getP_no());
 	}
 
 }

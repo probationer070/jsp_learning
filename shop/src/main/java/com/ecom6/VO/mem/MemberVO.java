@@ -14,6 +14,7 @@ import lombok.ToString;
 @Scope(value = WebApplicationContext.SCOPE_SESSION,
 proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class MemberVO {
+	private int rn;
 	private String mem_id;
 	private String m_passwd;
 	private String m_name;
@@ -25,4 +26,6 @@ public class MemberVO {
 	private String m_job;
 	private String m_role;
 	private LocalDate m_regdate;
+	private int startRow;
+	private int endRow;
 }

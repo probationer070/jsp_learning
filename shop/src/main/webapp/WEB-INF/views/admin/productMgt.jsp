@@ -8,6 +8,8 @@
 <meta charset="UTF-8">
 <title>쇼핑몰</title>
 <link rel="stylesheet" type="text/css" href="./css/ProductMgt.css" />
+<script type="text/javascript" src="./js/jquery-3.7.1.min.js"></script>
+<script src="./js/product.js" defer="defer"></script>
 </head>
 <body>
 	<div class="BigConatiner">
@@ -21,7 +23,8 @@
 			<div class="MainCont">
 	            <div id="productmgt">
 	            	<h2>상품목록</h2>
-	            	<div class="totalitem" align="right">총 상품수 : ${pcnt}</div>
+	            	<div class="totalitem" align="right">총 상품수 : 
+	            		<input name="total" type="button" value="${pcnt}" readonly="readonly"></div>
 	            	<table>
 	            		<thead>
 	            			<tr>
@@ -42,11 +45,26 @@
 	            				<c:when test="${fn:length(productList)>0}">
 	            					<c:forEach var="product" items="${productList}">
 	            						<tr>
-				            				<td class="pcol1">${product.p_no}</td>
-				            				<td class="pcol2">${product.p_name}</td>
-				            				<td class="pcol3">${product.price}</td>
-				            				<td class="pcol4">${product.pr_date}</td>
-				            				<td class="pcol5">${product.stock}</td>
+				            				<td class="pcol1">
+				            					<input type="text" name="p_no" value="${product.p_no}"
+				            					class="" readonly="readonly">
+				            				</td>
+				            				<td class="pcol2 pDetail">
+												<input type="text" name="p_name" value="${product.p_name}"
+				            					class="" readonly="readonly">
+											</td>
+				            				<td class="pcol3">
+				            					<input type="text" name="price" value="${product.price}"
+				            					class="number" readonly="readonly">
+				            				</td>
+				            				<td class="pcol4">
+				            					<input type="text" name="pr_date" value="${product.pr_date}"
+				            					class="" readonly="readonly">
+				            				</td>
+				            				<td class="pcol5">
+				            					<input type="text" name="stock" value="${product.stock}"
+				            					class="number" readonly="readonly">
+				            				</td>
 				            			</tr>
 	            					</c:forEach> 
 	            				</c:when>
