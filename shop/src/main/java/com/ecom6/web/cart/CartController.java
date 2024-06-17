@@ -15,7 +15,9 @@ import com.ecom6.service.cart.CartService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 public class CartController {
 	@Autowired
@@ -34,35 +36,43 @@ public class CartController {
 		MemberVO ssKey = null;
 		Hashtable<Integer, OrderVO> hCartList = null;
 		if(session.getAttribute("hCartList")==null) {
-			hCartList = new Hashtable<>();			
+			hCartList = new Hashtable<>();				
 		} else {
 			hCartList = (Hashtable<Integer, OrderVO>) session.getAttribute("hCartList");
 		}
+		String flag = req.getParameter("flag");
+		// 미리 세션여부에 따라 장바구니 삭제를 방지하기 위해 미리 저장
 		cartService.setCartList(hCartList);
-		
 		if(session.getAttribute("ssKey")!=null) {
 			ssKey = (MemberVO) session.getAttribute("ssKey");
 			// 고객 정보를 미리 저장해 둠
 			ovo.setMem_id(ssKey.getMem_id());
-			url ="cartList";
+			url ="cartlist";
+
 		} else {
 			msg = "로그인이 필요합니다.";
 			url = "/login";
 		}
-		String flag = req.getParameter("flag");
+		
 		switch (flag) {
 		case "add": 
+			hCartList = cartService.addCart(ovo);
+			msg="장바구니에 추가했습니다";
 			break;
 		case "update": 
+			hCartList = cartService.updateCart(ovo);
+			msg="장바구니에 수정했습니다";
 			break;
 		case "delete": 
+			cartService.deleteCart(ovo);
+			msg="장바구니에 삭제했습니다";
 			break;
 		}
+		
 		model.addAttribute("url", url);
 		model.addAttribute("msg", msg);
-		model.addAttribute("ssKey", ssKey);
-		model.addAttribute("hCartList", hCartList);
-		
+		session.setAttribute("ssKey", ssKey);
+		session.setAttribute("hCartList", hCartList);
 		return page;
 	}
 	
@@ -72,5 +82,21 @@ public class CartController {
 						   OrderVO ovo,
 						   Model model) {
 		return cartProc(req, res, ovo, model);
+	}
+	
+	@GetMapping("/cartlist")
+	public String cartList(HttpServletRequest req,
+						   HttpServletResponse res,
+						   OrderVO ovo,
+						   Model model) {
+		
+		HttpSession session = req.getSession();
+		@SuppressWarnings("unchecked")
+		Hashtable<Integer, OrderVO> hCartList = (Hashtable<Integer, OrderVO>) session.getAttribute("hCartList");
+	
+		String content = "custom/CartList.jsp";
+ 		model.addAttribute("content", content);
+		session.setAttribute("hCartList", hCartList); // ???
+ 		return "Main";
 	}
 }

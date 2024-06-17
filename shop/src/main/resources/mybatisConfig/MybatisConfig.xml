@@ -11,6 +11,7 @@
    <typeAliases>
         <typeAlias alias="hashMap" type="java.util.HashMap" />
         <typeAlias alias="map" type="java.util.Map" />
+        <typeAlias alias="list" type="java.util.List" />
         <typeAlias alias="string" type="java.lang.String" />
         <typeAlias alias="mvo" type="com.ecom6.VO.mem.MemberVO" />
         <typeAlias alias="pvo" type="com.ecom6.VO.product.ProductVO" />

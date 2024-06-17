@@ -10,6 +10,7 @@ public class OrderVO {
 	private int o_no;
 	private int price;
 	private int quantity;
+	private int stock;
 	private int state;
 	private int amount;
 	private String o_regdate;

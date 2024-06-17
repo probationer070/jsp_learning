@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+.head-title {
+	margin-bottom: 20px;
+}
+
+.pcol1 { width: 15%; padding: 3px 3px 3px 3px;}
+.pcol2 { width: 20%; padding: 3px 3px 3px 3px;}
+.pcol3 { width: 10%; padding: 3px 3px 3px 3px;}
+.pcol4 { width: 15%; padding: 3px 3px 3px 3px;}
+.pcol5 { width: 10%; padding: 3px 3px 3px 3px;}
+.pcol6 { width: 8%; padding: 3px 3px 3px 3px;}
+.pcol7 { width: 17%; padding: 3px 3px 3px 3px; text-align: center;}
+
+.pcol1 input, .pcol2 input, .pcol3 input , .pcol4 input , .pcol5 input , .pcol6 input       {
+	width: 100%;
+	padding: 8px;
+}
+
+.pcol7 input {
+	width: 30%;
+	padding: 6px;
+}

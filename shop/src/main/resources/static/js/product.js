@@ -4,12 +4,12 @@
 
  $().ready(function(){
 	/* 최종일때 주석 해제*/
-	var nlen = $('.number').length;
+	/*var nlen = $('.number').length;
 	for(var i=0; i<nlen; i++) {
 		var n = $('.number').eq(i).val();
 		var to_n = n.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,",");
 		$('.number').eq(i).val(to_n);
-	}
+	}*/
 	
 	$('.psubmit').on('click', function() {
 		var nm = this.name;
@@ -53,7 +53,7 @@
 			var valWithoutComma = $(this).val().replace(/[,]/g, "");
 			$(this).val(valWithoutComma);
 		});
-		$('.num').each(function(){
+		$('.number').each(function(){
 			var valWithoutComma = $(this).val().replace(/[,]/g, "");
 			$(this).val(valWithoutComma);
 		});
