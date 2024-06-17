@@ -11,9 +11,11 @@
    <typeAliases>
         <typeAlias alias="hashMap" type="java.util.HashMap" />
         <typeAlias alias="map" type="java.util.Map" />
+        <typeAlias alias="list" type="java.util.List" />
         <typeAlias alias="string" type="java.lang.String" />
         <typeAlias alias="mvo" type="com.ecom6.VO.mem.MemberVO" />
         <typeAlias alias="pvo" type="com.ecom6.VO.product.ProductVO" />
-        <typeAlias alias="pgVo" type="com.ecom6.VO.PageVO" />
+        <typeAlias alias="ovo" type="com.ecom6.VO.order.OrderVO" />
+        <typeAlias alias="pgVo" type="com.ecom6.common.vo.PageVO" />
     </typeAliases>   
 </configuration>

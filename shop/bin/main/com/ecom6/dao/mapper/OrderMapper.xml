@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ecom6.dao.order.OrderDao">
+	<insert id="insertOrders" parameterType="list">
+		<selectKey keyProperty="o_no" resultType="int" order="BEFORE">
+		SELECT NVL(MAX(O_NO),0)+1 AS O_NO FROM ORDERT
+		</selectKey>
+		<foreach collection="list" item="ovo" index="index"
+				 open="INSERT ALL " close="SELECT * FROM DUAL" separator=" ">
+			INTO ORDERT(O_NO, PRICE, AMOUNT, QUANTITY, O_REGDATE, STATE, MEM_ID, P_NO)
+			VALUES(#{o_no}, #{ovo.price},
+				  #{ovo.price}*#{ovo.quantity}, 
+				  #{ovo.quantity}, SYSDATE, 1,
+				  #{ovo.mem_id}, #{ovo.p_no})
+		</foreach>
+	</insert>
+</mapper>
