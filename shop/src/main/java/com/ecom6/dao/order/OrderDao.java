@@ -11,4 +11,10 @@ public interface OrderDao {
 
 	int insertOrders(List<OrderVO> list);
 
+	int getTotalOrders(OrderVO ovo);
+
+	List<OrderVO> getOrders(OrderVO ovo);
+
+	List<OrderVO> getOrderList(OrderVO ovo);
+
 }

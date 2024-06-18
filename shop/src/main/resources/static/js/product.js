@@ -64,9 +64,34 @@
 		var p_no = $(this).closest('tr').find('input[name=p_no]').val();
 		location.href='/productDetail?p_no='+p_no;
 	});
+	
+	// 전체 선택을 하면 모두 참, 해제시 모두 해제
+	$('#checkAll').on('click', () => {
+		if($('#checkAll').prop("checked")==true){
+			$('input[name=ck]').prop("checked", true);
+		} else if($('#checkAll').prop("checked")==false) {
+			$('input[name=ck]').prop("checked", false);
+		}
+	});
+	
+	// 전체가 다 체크되면 전체체크가 참이고 그중에 하나만이라도 취소시 전체가 false
+	$('input[name=ck]').on('click', () => {
+		var l = $('input[name=ck]').length;
+		if($('input[name=ck]:checked').length == l) {
+			$('#checkAll').prop("checked", true);
+		} else {
+			$('#checkAll').prop("checked", false);
+		}
+	})
+	// 수동으로 select 변경시 자동 check 됨 -> ??? 안 됨
+	$('select[name=state]').on('change', () => {
+		var tr = $(this).parent().parent();
+		var th = tr.children();
+		tr.find(th).find("input[name=ck]").prop("checked", true);
+	})
  })
  
- function validate() {
+function validate() {
 	var flen = $("form[name=form1] .chk").length;
 	for (var i=0; i < flen; i++) {
 		if( $('form[name=form1] .chk').eq(i).val() == "" || 
@@ -84,4 +109,14 @@ function numberWithCommas(num) {
 	var parts = num.toString().split(".");
 	return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 	+ (parts[1] ? "," + parts[1] : "");
+}
+
+function orderDetail(obj) {
+	var pno = $(obj).closest("tr").find("input[name=p_no]").val();
+	var ono = $(obj).closest("tr").find("input[name=o_no]").val();
+	var mem_id = $(obj).closest("tr").find("input[name=mem_id]").val();
+	$('form[name=form1] input[name=p_no]').val(pno);
+	$('form[name=form1] input[name=o_no]').val(ono);
+	$('form[name=form1] input[name=mem_id]').val(mem_id);
+	$('form[name=form1]').submit();
 }

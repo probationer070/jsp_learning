@@ -66,6 +66,7 @@
 					<tr>
 						<td colspan="6" align="right">
 							<input type="button" onclick="javascript:location.href='orderProc'" value="주문하기">
+							<input type="button" onclick="javascript:location.href='productList'" value="상품목록으로">
 						</td>
 					</tr>
 				</c:when>

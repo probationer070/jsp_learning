@@ -30,7 +30,7 @@ public class OrderWrapper {
 		if (r>0) {
 			productService.updateStocks(hCartList);
 			msg = "주문완료했습니다.";
-			url = "orderList";
+			url = "orderlist";
 			hCartList.clear();
 		} else {
 			msg = "주문 실패.";

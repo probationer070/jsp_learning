@@ -17,6 +17,7 @@ public class OrderVO {
 	private String mem_id;	// 외래키
 	private String m_name;
 	private String m_role;
+	private String image; // 외래?
 	private int p_no;	// 외래키
 	private String p_name;
 	private int startRow;
