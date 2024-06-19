@@ -34,5 +34,24 @@
 			</where>
 		</foreach>
 	</update>
+	
+	<update id="updateProduct" parameterType="pvo">
+		UPDATE PRODUCT SET 
+			P_NAME = #{p_name},
+			STOCK = #{stock},
+			PRICE = #{price},
+			DETAIL = #{detail},
+			PR_DATE = SYSDATE,
+			<if test="image!=null">
+			IMAGE = #{image},
+			</if>
+			PATH = #{path}
+			WHERE P_NO = #{p_no}
+	</update>
+	
+	<delete id="deleteProduct" parameterType="pvo">
+		DELETE FROM PRODUCT
+		WHERE P_NO = #{p_no}
+	</delete>
 
 </mapper>

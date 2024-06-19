@@ -66,4 +66,16 @@
 	WHERE RN >= 1 AND RN <= 6
 	]]>
 	</select>
+	
+	<update id="orderStateUpdate" parameterType="list">
+		<foreach collection="list" item="item" index="index" separator=";"
+			open="DECLARE BEGIN" close="; END;">
+			UPDATE ORDERT SEt
+			STATE=#{item.state},
+			O_REGDATE=SYSDATE
+			WHERE O_NO=#{item.o_no}
+			AND P_NO=#{item.p_no}
+			AND MEM_ID=#{item.mem_id}
+		</foreach>
+	</update>
 </mapper>

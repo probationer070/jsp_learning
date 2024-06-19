@@ -20,4 +20,8 @@ public interface ProductDao {
 	ProductVO productDetail(int p_no);
 
 	void updateStocks(List<OrderVO> list);
+
+	int updateProduct(ProductVO pvo);
+
+	int deleteProduct(ProductVO pvo);
 }

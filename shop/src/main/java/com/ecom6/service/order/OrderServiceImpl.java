@@ -64,5 +64,38 @@ public class OrderServiceImpl implements OrderService {
 		reSet.put("orders", orders);
 		return reSet;
 	}
+	
+	@Transactional
+	@Override
+	public void orderStateUpdate(ArrayList<String> tdArr) {
+		List<OrderVO> list = new ArrayList<>();
+		for (int i=0; i < tdArr.size(); i+=4) {
+			OrderVO ovo = new OrderVO();
+			int n=0, no=0;
+			String mid = null;
+			// 한 개씩 꺼내서 담기
+			
+			n = tdArr.get(i).indexOf(":"); // 첫번째 o_no
+			no = Integer.parseInt(tdArr.get(i).substring(n+1));
+			ovo.setO_no(no);
+			
+			n = tdArr.get(i+1).indexOf(":"); // 첫번째 p_no
+			no = Integer.parseInt(tdArr.get(i+1).substring(n+1));
+			ovo.setP_no(no);
+			
+			n = tdArr.get(i+2).indexOf(":"); // 첫번째 p_no
+			mid = tdArr.get(i+2).substring(n+1);
+			ovo.setMem_id(mid);
+			
+			n = tdArr.get(i+3).indexOf(":"); // 첫번째 p_no
+			no = Integer.parseInt(tdArr.get(i+3).substring(n+1));
+			ovo.setState(no);
+			
+			// 리스트에 추가
+			list.add(ovo);
+		}
+		orderDao.orderStateUpdate(list);
+		// log.info("list ===> "+list);
+	}
 
 }

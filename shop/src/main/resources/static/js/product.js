@@ -60,10 +60,34 @@
 		$("form[name=form1]").submit();
 	})
 	
+	$('button[name=update]').on('click', function(){
+		var pno= $('input[name=p_no]').val();
+		location.href = '/productUpdateForm?p_no='+pno;
+	});
+
+	$('button[name=delete]').on('click', function(){
+		var pno= $('input[name=p_no]').val();
+		if(confirm('정말 삭제하시겠습니다?'))
+			location.href = '/productDelete?p_no='+pno;
+		else return false;
+	});
+
 	$('.pDetail').on('click', function() {
 		var p_no = $(this).closest('tr').find('input[name=p_no]').val();
 		location.href='/productDetail?p_no='+p_no;
 	});
+	
+	$('.orderDetail').on('click', function(){
+		var pno = $(this).closest('tr').find('input[name=p_no]').val();
+		var ono = $(this).closest('tr').find('input[name=o_no]').val();
+		var mid = $(this).closest('tr').find('input[name=mem_id]').val();
+		
+		$('form[name=form1] input[name=o_no]').val(ono);
+		$('form[name=form1] input[name=p_no]').val(pno);
+		$('form[name=form1] input[name=mem_id]').val(mid);
+		$('form[name=form1]').submit();
+		// alert(pno+"::::"+ono+"::::"+mid);
+	 })
 	
 	// 전체 선택을 하면 모두 참, 해제시 모두 해제
 	$('#checkAll').on('click', () => {
@@ -83,12 +107,52 @@
 			$('#checkAll').prop("checked", false);
 		}
 	})
-	// 수동으로 select 변경시 자동 check 됨 -> ??? 안 됨
-	$('select[name=state]').on('change', () => {
-		var tr = $(this).parent().parent();
-		var th = tr.children();
-		tr.find(th).find("input[name=ck]").prop("checked", true);
-	})
+	// 수동으로 select 변경시 자동 check 됨 -> ??? 안 됨 -> 익명 함수 함부로 쓰지 말것!!!
+	$('select[name=state]').on('change',function(){
+		var tr =$(this).parent().parent();
+		var td = tr.children();
+		tr.find(td).find("input[name=ck]").prop("checked",true);
+	 })
+	 
+	 $('.orderChange').on('click', function(){
+		var tdArr = new Array(); // 체크박스가 체크되어 있는 애들 받기위한 td배열
+		// 체크박스 값 가져오기 모두
+		var ckbox = $('input[name=ck]:checked');
+		// 한 줄씩 꺼내서 값 저장
+		ckbox.each(function(i){	// i번째
+			var tr = ckbox.parent().parent().eq(i);
+			var th = tr.children();	// 모든 컬럼을 가져오기
+			var pno = tr.find(th).find("input[name=p_no]").val();
+			var ono = tr.find(th).find("input[name=o_no]").val();
+			var memid = tr.find(th).find("input[name=mem_id]").val();
+			var state = tr.find(th).find("select[name=state]").val();
+			// alert(pno+" "+ono+" "+memid+" "+state);
+			// 가져온 값을 배열에 저장
+			tdArr.push("o_no:"+ono);
+			tdArr.push("p_no:"+pno);
+			tdArr.push("mem_id:"+memid);
+			tdArr.push("state:"+state);
+		}) // each 종료
+		// 비동기통신(ajax)
+		$.ajax({
+			async:false,
+			type:'post',
+			data:{tdArr},
+			url:'/orderMgtProc',
+			dataType:'json',
+			success: setInterval(), /* 콜백 함수 : 성공시 처리되어야 할 일 지정 */
+		});
+		// 콜백함수 정의
+		function setInterval(){
+			// 1. check박스 지우기
+			alert("처리 완료");
+			var tr =$("select[name='state']").parent().parent();
+			var td = tr.children();
+			tr.find(td).find("input[name=ck]").prop("checked",false);
+		}
+
+	 }) // orderChange 끝
+	 
  })
  
 function validate() {
@@ -115,8 +179,8 @@ function orderDetail(obj) {
 	var pno = $(obj).closest("tr").find("input[name=p_no]").val();
 	var ono = $(obj).closest("tr").find("input[name=o_no]").val();
 	var mem_id = $(obj).closest("tr").find("input[name=mem_id]").val();
-	$('form[name=form1] input[name=p_no]').val(pno);
 	$('form[name=form1] input[name=o_no]').val(ono);
+	$('form[name=form1] input[name=p_no]').val(pno);
 	$('form[name=form1] input[name=mem_id]').val(mem_id);
-	$('form[name=form1]').submit();
+	// $('form[name=form1]').submit();
 }

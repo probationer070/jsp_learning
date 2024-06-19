@@ -17,4 +17,6 @@ public interface OrderDao {
 
 	List<OrderVO> getOrderList(OrderVO ovo);
 
+	void orderStateUpdate(List<OrderVO> list);
+
 }

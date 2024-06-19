@@ -131,10 +131,17 @@ public class ProductController {
 						if (r > 0) {
 							msg="상품등록성공!";
 						} else {
-							msg="상품등록성공!";							
+							msg="상품등록실패!";							
 						}
 					} else if(flag.equals("update")) {
 						// update 호출
+						//log.info("update ===> ");
+						int r = productService.updateProduct(pvo, file);
+						if (r > 0) {
+							msg="상품수정성공!";
+						} else {
+							msg="상품수정실패!";							
+						}
 					}
 					url = "productMgt";
 				}
@@ -186,6 +193,81 @@ public class ProductController {
 		return page;
 	}
 	
+	
+	@GetMapping("productUpdateForm")
+	public String productUpdateForm(HttpServletRequest req, 
+									HttpServletResponse res,
+									Model model, ProductVO pvo) {
+		String page=null;
+		MemberVO ssKey = null;
+		String content = null;
+		String msg = null;
+		String url = null;
+		HttpSession session = req.getSession();
+		ProductVO product = productService.productDetail(pvo);
+		if (session.getAttribute("ssKey") != null) {
+			ssKey = (MemberVO) session.getAttribute("ssKey");
+			// session이 있을 때 받아서 저장
+			session.setAttribute("ssKey", ssKey);
+			if (ssKey.getM_role().equals("admin")) {
+				content = "ProductUpdateForm.jsp";
+				model.addAttribute("content", content);
+				page = "admin/Main";
+			} else {
+				msg = "잘못된 접근입니다.";
+				url = "/";
+				page = "MsgPage";
+				model.addAttribute("url", url);
+				model.addAttribute("msg", msg);
+			}
+		} else {
+			msg = "세션이 종료되었습니다.";
+			url = "/login";
+			page = "MsgPage";
+			model.addAttribute("url", url);
+			model.addAttribute("msg", msg);
+		}
+		model.addAttribute("product", product);
 
+		return page;
+	}
+	
+	@GetMapping("/productDelete")
+	public String productDelete(HttpServletRequest req, 
+								HttpServletResponse res,
+								Model model, ProductVO pvo) {
+		String page=null;
+		MemberVO ssKey = null;
+		HttpSession session = req.getSession();
+		if (session.getAttribute("ssKey") != null) {
+			ssKey = (MemberVO) session.getAttribute("ssKey");
+			// session이 있을 때 받아서 저장
+			session.setAttribute("ssKey", ssKey);
+			if (ssKey.getM_role().equals("admin")) {
+				// 삭제 후
+				String msg = null;
+				int r=0;
+				try {
+					r = productService.deleteProduct(pvo);
+					if (r > 0) 
+						msg="상품 삭제 성공";
+					else
+						msg="등록된 상품이 없습니다";							
+				} catch (Exception e) {
+					msg="해당 상품을 구매한 고객이 있습니다.";	
+				} finally {					
+					String url = "/productMgt";
+					model.addAttribute("msg", msg);
+					model.addAttribute("url", url);
+				}
+				page = "MsgPage";
+			} else {
+				page = "redirect:/";	// 최초 화면으로 이동
+			}
+		} else {
+			page = "redirect:/";
+		}
+		return page;
+	}
 	
 }

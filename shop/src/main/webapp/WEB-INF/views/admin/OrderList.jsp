@@ -40,57 +40,58 @@
 			</c:when>
 			<c:when test="${fn:length(orders)>0}">
 				<c:forEach items="${orders}" var="order" varStatus="i">
-				<tr>
-					<th class="adcol0">
-	    				<input type="checkbox" name="ck" value="${i.index}">
-	    			</th>
-					<th class="adcol1">
-	    				<input type="text" name="rn" value="${order.rn}"
-	    					class="num" readonly="readonly">
-	    			</th>
-					<th class="adcol2">
-						<input type="text" name="p_name" value="${order.p_name}"
-	    					class="" readonly="readonly" 
-	    					onclick="javascript:orderDetail(this)">
-						<input type="hidden" name="p_no" value="${order.p_no}" readonly="readonly">
-						<input type="hidden" name="o_no" value="${order.o_no}" readonly="readonly">
-	    			</th>
-	    			<th class="adcol3">
-	    				<input type="text" name="quantity" value="${order.quantity}"
-	    					class="num" readonly="readonly">
-						<input type="hidden" name="mem_id" value="${order.mem_id}" readonly="readonly">
-	    			</th>
-	    			<th class="adcol4">
-	    				<input type="text" name="quantity" value="${order.m_name}(${order.mem_id})"
-	    					class="num" readonly="readonly">
-	    			</th>
-	    			<th class="adcol5">
-	    				<input type="text" name="price" value="${order.price}"
-	    					class="" readonly="readonly">
-	    			</th>
-	    			<th class="adcol6">
-	    				<input type="text" name="amount" value="${order.amount}"
-	    					class="" readonly="readonly">
-	    			</th>
-	    			<th class="adcol7">
-	    				<input type="text" name="o_regdate" value="${order.o_regdate}"
-	    					class="" readonly="readonly">
-	    			</th>
-	    			<th class="adcol7">
-	    				<select name="state" class="state${i.count}">
-		                  <option value="1">결재중</option>
-		                  <option value="2">배송준비</option>
-		                  <option value="3">배송중</option>
-		                  <option value="4">배송완료</option>
-		                  <option value="5">구매확정</option>
-		                </select>
-	    				<script type="text/javascript">
-	    						$(function(){
-	    	            	   $(".state"+'${i.count}').val('${order.state}')
-	    	               })
-	    				</script>
-	    			</th>
-				</tr>
+					<tr>
+						<th class="adcol0 ">
+		    				<input type="checkbox" name="ck" value="${i.index}">
+		    			</th>
+						<th class="adcol1 orderDetail">
+		    				<input type="text" name="rn" value="${order.rn}"
+		    					class="num" readonly="readonly">
+		    			</th>
+						<th class="adcol2 orderDetail">
+							<input type="text" name="p_name" value="${order.p_name}"
+		    					class="" readonly="readonly" 
+		    					onclick="javascript:orderDetail(this)">
+							<input type="hidden" name="p_no" value="${order.p_no}" readonly="readonly">
+							<input type="hidden" name="o_no" value="${order.o_no}" readonly="readonly">
+							<input type="hidden" name="mem_id" value="${order.mem_id}" readonly="readonly">
+		    			</th>
+		    			<th class="adcol3 orderDetail">
+		    				<input type="text" name="quantity" value="${order.quantity}"
+		    					class="num" readonly="readonly">
+		    			</th>
+		    			<th class="adcol4 orderDetail">
+		    				<input type="text" name="quantity" value="${order.m_name}(${order.mem_id})"
+		    					class="num" readonly="readonly">
+							<input type="hidden" name="mem_id" value="${order.mem_id}" readonly="readonly">
+		    			</th>
+		    			<th class="adcol5 orderDetail">
+		    				<input type="text" name="price" value="${order.price}"
+		    					class="" readonly="readonly">
+		    			</th>
+		    			<th class="adcol6 orderDetail">
+		    				<input type="text" name="amount" value="${order.amount}"
+		    					class="" readonly="readonly">
+		    			</th>
+		    			<th class="adcol7 orderDetail">
+		    				<input type="text" name="o_regdate" value="${order.o_regdate}"
+		    					class="" readonly="readonly">
+		    			</th>
+		    			<th class="adcol7">
+		    				<select name="state" class="state${i.count}">
+			                  <option value="1">결재중</option>
+			                  <option value="2">배송준비</option>
+			                  <option value="3">배송중</option>
+			                  <option value="4">배송완료</option>
+			                  <option value="5">구매확정</option>
+			                </select>
+		    				<script type="text/javascript">
+		    						$(function(){
+		    	            	   $(".state"+'${i.count}').val('${order.state}')
+		    	               })
+		    				</script>
+		    			</th>
+					</tr>
 				</c:forEach>
 			</c:when>
 		</c:choose>
@@ -98,14 +99,14 @@
 	<table style="text-align: center">
 		<tr>
 			<th colspan="9">
-				<input name="s" type="button" class="" value="상태수정">
+				<input name="s" type="button" class="orderChange" value="상태수정">
 			</th>
 		</tr>
 	</table>
 	<form action="orDetailMgt" name="form1" method="post">
-		<input type="hidden" name="p_no" value="">
-		<input type="hidden" name=o_no value="">
-		<input type="hidden" name="mem_id" value="">
+		<input type="text" name="p_no" value="">
+		<input type="text" name=o_no value="">
+		<input type="text" name="mem_id" value="">
 	</form>
 </div>
 			

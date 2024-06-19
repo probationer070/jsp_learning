@@ -19,4 +19,8 @@ public interface ProductService {
 
 	void updateStocks(Hashtable<Integer, OrderVO> hCartList);
 
+	int updateProduct(ProductVO pvo, MultipartFile file);
+
+	int deleteProduct(ProductVO pvo) throws Exception;
+
 }

@@ -2,6 +2,7 @@ package com.ecom6.service.product;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -73,6 +74,42 @@ public class ProductServiceimpl implements ProductService {
 			list.add(hCartList.get(key));
 		}
 		productDao.updateStocks(list);
+	}
+
+	@Override
+	public int updateProduct(ProductVO pvo, MultipartFile file) {
+		String originalFileNm = file.getOriginalFilename();
+		File destinationFile;
+		if (pvo.getImage().equals("ready.gif") || pvo.getImage()==null) {
+			if (originalFileNm==null || originalFileNm.length()==0)
+				pvo.setImage("ready.gif");
+		} else {			
+			if (originalFileNm!=null || originalFileNm.length()>0) {
+				pvo.setImage(originalFileNm);
+				destinationFile = new File(pvo.getPath()+originalFileNm);
+				// 실제 파일 전송
+				try {
+					file.transferTo(destinationFile);
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return productDao.updateProduct(pvo);
+	}
+
+	@Override
+	public int deleteProduct(ProductVO pvo) throws Exception {
+		int r = 0;
+		try {
+			r =  productDao.deleteProduct(pvo);
+			if (r == 0) {
+				throw new Exception("삭제할 제품이 없습니다.");
+			}
+		} catch (SQLException e) {
+			throw new Exception("데이터베이스 오류: "+ e.getMessage(), e);
+		}
+		return r;
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.ecom6.service.order;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -14,5 +15,7 @@ public interface OrderService {
 	OrderVO getOrder(OrderVO ovo);
 
 	Map<String, Object> getOrderList(OrderVO ovo);
+
+	void orderStateUpdate(ArrayList<String> tdArr);
 
 }

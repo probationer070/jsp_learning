@@ -1,5 +1,6 @@
 package com.ecom6.web.order;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ecom6.VO.mem.MemberVO;
 import com.ecom6.VO.order.OrderVO;
@@ -20,8 +22,10 @@ import com.ecom6.wrapper.order.OrderWrapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 import oracle.jdbc.proxy.annotation.Post;
 
+@Slf4j
 @Controller
 public class OrderController {
 	// 규칙 1. 서비스에서 트랜잭션을 걸어야 한다.
@@ -171,6 +175,36 @@ public class OrderController {
 			model.addAttribute("msg", msg);
 		}
 		session.setAttribute("ssKey", ssKey);
+		
+		return page;
+	}
+	
+	@PostMapping("orderMgtProc")
+	@ResponseBody
+	public void orderMgtProc(HttpServletRequest req,
+							 HttpServletResponse res,
+							 OrderVO ovo,
+							 Model model,
+							 @RequestParam(value="tdArr[]") ArrayList<String> tdArr) {
+		HttpSession session = req.getSession();
+		MemberVO admin = (MemberVO) session.getAttribute("ssKey");
+		if (admin!=null && admin.getM_role().equals("admin")) {
+			try {
+				log.info("tdArr Data check ==> "+tdArr);	
+				orderService.orderStateUpdate(tdArr);
+			} catch (Exception e) {
+				log.info(e.getMessage()+":"+e.getLocalizedMessage());
+			}
+		}
+	}
+	
+	@PostMapping("/orDetailMgt")
+	public String orderDetail(HttpServletRequest req,
+							  HttpServletResponse res,
+							  OrderVO ovo,
+							  Model model) {
+		String page = "admin/Main";
+		model.addAttribute("content", "./OrderList.jsp");
 		
 		return page;
 	}
