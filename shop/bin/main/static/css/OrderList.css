@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+.head-title {
+	margin-bottom: 20px;
+}
+
+table, tr, th, td {
+	border: 1px solid #000;
+	border-collapse: collapse;
+}
+
+table {
+	width: 100%;
+}
+
+.adcol0 { width: 5%; padding: 3px 3px 3px 3px;}
+.adcol1 { width: 10%; padding: 3px 3px 3px 3px;}
+.adcol2 { width: 10%; padding: 3px 3px 3px 3px;}
+.adcol3 { width: 7%; padding: 3px 3px 3px 3px;}
+.adcol4 { width: 14%; padding: 3px 3px 3px 3px;}
+.adcol5 { width: 10%; padding: 3px 3px 3px 3px;}
+.adcol6 { width: 10%; padding: 3px 3px 3px 3px;}
+.adcol7 { width: 10%; padding: 3px 3px 3px 3px; text-align: center;}
+
+.adcol1 input, .adcol2 input, .adcol3 input , .adcol4 input , .adcol5 input , .adcol6 input, .adcol7 input      {
+	width: 100%;
+	text-align: center;
+}
+
+input {
+	border: none;
+}

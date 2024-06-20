@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+table, tr, th, td {
+	border: 1px solid #000;
+	border-collapse: collapse;
+}
+
+table {
+	width: 100%;
+}
+
+.mcol0 { width: 5%; padding: 3px 3px 3px 3px;}
+.mcol1 { width: 10%; padding: 3px 3px 3px 3px;}
+.mcol2 { width: 10%; padding: 3px 3px 3px 3px;}
+.mcol3 { width: 7%; padding: 3px 3px 3px 3px;}
+.mcol4 { width: 14%; padding: 3px 3px 3px 3px;}
+.mcol5 { width: 10%; padding: 3px 3px 3px 3px;}
+.mcol6 { width: 10%; padding: 3px 3px 3px 3px;}
+.mcol7 { width: 10%; padding: 3px 3px 3px 3px; text-align: center;}
+
+.mcol1 input, .mcol2 input, .mcol3 input , .mcol4 input , .mcol5 input , .mcol6 input, .mcol7 input      {
+	width: 100%;
+	text-align: center;
+}
+
+input {
+	border: none;
+}
+
+.totalitem {
+	margin-bottom: 40px;
+}

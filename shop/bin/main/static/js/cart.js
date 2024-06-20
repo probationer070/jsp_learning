@@ -34,8 +34,10 @@ function cartUpdate(f, obj) {
 			  },
 		url:url,
 		dataType:"json",
-		success: function(msg){
-			// alert(msg);
-		}
+		success:msgAler()
 	});
+	
+	function msgAler() {
+		alert("처리완료했습니다.");
+	}
 }

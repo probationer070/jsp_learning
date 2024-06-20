@@ -4,12 +4,21 @@
 	margin-bottom: 20px;
 }
 
+table, tr, th, td {
+	/* border: 1px solid #000; */
+	border-collapse: collapse;
+}
+
+table {
+	width: 100%;
+}
+
 .pcol1 { width: 15%; padding: 3px 3px 3px 3px;}
 .pcol2 { width: 20%; padding: 3px 3px 3px 3px;}
 .pcol3 { width: 10%; padding: 3px 3px 3px 3px;}
 .pcol4 { width: 15%; padding: 3px 3px 3px 3px;}
 .pcol5 { width: 10%; padding: 3px 3px 3px 3px;}
-.pcol6 { width: 8%; padding: 3px 3px 3px 3px;}
+.pcol6 { width: 15%; padding: 3px 3px 3px 3px;}
 .pcol7 { width: 17%; padding: 3px 3px 3px 3px; text-align: center;}
 
 .pcol1 input, .pcol2 input, .pcol3 input , .pcol4 input , .pcol5 input , .pcol6 input       {
