@@ -35,6 +35,12 @@
 		</foreach>
 	</update>
 	
+	<update id="updateStock" parameterType="ovo">
+		UPDATE PRODUCT SET
+		STOCK = #{stock} + #{quantity}
+		WHERE P_NO = #{p_no}
+	</update>
+	
 	<update id="updateProduct" parameterType="pvo">
 		UPDATE PRODUCT SET 
 			P_NAME = #{p_name},
@@ -53,5 +59,6 @@
 		DELETE FROM PRODUCT
 		WHERE P_NO = #{p_no}
 	</delete>
+	
 
 </mapper>

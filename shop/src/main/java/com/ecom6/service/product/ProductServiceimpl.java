@@ -97,7 +97,7 @@ public class ProductServiceimpl implements ProductService {
 		}
 		return productDao.updateProduct(pvo);
 	}
-
+	
 	@Override
 	public int deleteProduct(ProductVO pvo) throws Exception {
 		int r = 0;
@@ -112,4 +112,16 @@ public class ProductServiceimpl implements ProductService {
 		return r;
 	}
 
+//	@Override
+//	public int updateStock(int p_no, int stock) {
+//		ProductVO pvo = new ProductVO();
+//		pvo.setP_no(p_no);
+//		pvo.setStock(stock);
+//		return productDao.updateStock(pvo);
+//	}
+
+	@Override
+	public int updateStock(OrderVO ovo) {
+		return productDao.updateStock(ovo);
+	}
 }

@@ -18,7 +18,7 @@
 	
 <div id="productMgt">
 	<h2 class="head-title">주문관리</h2>
-	ADMIN
+	ADMIN OD
 	<div class="totalitem" align="right">주문 건 : ${orderTot}</div>
 	<table class="Main">
 		<tr>

@@ -13,13 +13,27 @@
 	
 	$('.psubmit').on('click', function() {
 		var nm = this.name;
-		if(nm=='insert'){
+
+		if(nm=='insert') {
 			$('form[name=form1]').attr("action", "productMgtProc?flag=insert");
-		} else {
+		} else if(nm=='updatePro') {
 			$('form[name=form1]').attr("action", "productMgtProc?flag=update");
+		} else if(nm=='stateUpdate') {
+			$('.inNum, .num').each(function(){
+				var valWithoutComma = $(this).val().replace(/[,]/g, "");
+				$(this).val(valWithoutComma);
+			});
+			$("form[name=form1]").submit();
+		} else if(nm=='Orderdelete') {
+			$('.inNum, .num').each(function(){
+				var valWithoutComma = $(this).val().replace(/[,]/g, "");
+				$(this).val(valWithoutComma);
+			});
+			$('form[name=form1]').attr("action", "orderDelete");
+			$("form[name=form1]").submit();
 		}
 		if(validate()){
-			$('.inNum').each(function(){
+			$('.inNum, .num').each(function(){
 				var valWithoutComma = $(this).val().replace(/[,]/g, "");
 				$(this).val(valWithoutComma);
 			});

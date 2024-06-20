@@ -39,4 +39,22 @@
 		M_REGDATE=SYSDATE
 		WHERE MEM_ID=#{mem_id}
 	</update>
+	
+	<select id="getTotalMember" resultType="int" parameterType="mvo">
+		SELECT COUNT(*) FROM MEMBER
+	</select>
+	
+	<select id="getMemberList" parameterType="mvo" resultType="mvo">
+		SELECT * FROM(
+		SELECT ROWNUM RN, A.* FROM (
+		SELECT MEM_ID, M_PASSWD, M_NAME, M_EMAIL, M_PHONE, ZIPCODE,
+				ADDRESS, ADDRESS2, M_JOB, M_ROLE, M_REGDATE  
+				FROM MEMBER
+				WHERE M_ROLE='mem'
+				) A
+		)
+		<![CDATA[
+		WHERE RN >= 1 AND RN <= 6
+		]]>
+	</select>
 </mapper>

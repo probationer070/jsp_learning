@@ -64,7 +64,7 @@
 			<li><a href="/productMgt">상품관리</a></li>
 			<li><a href="/orderMgt">주문관리</a></li>
 			<li><a href="/memberMgt">회원관리</a></li>
-			<li><a href="/DelveryMgt">배송관리</a></li>
+			<li><a href="#">배송관리</a></li>
 		</ul>
 	</nav>
 	</div>

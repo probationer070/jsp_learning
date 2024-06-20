@@ -24,4 +24,6 @@ public interface ProductDao {
 	int updateProduct(ProductVO pvo);
 
 	int deleteProduct(ProductVO pvo);
+
+	int updateStock(OrderVO ovo);
 }

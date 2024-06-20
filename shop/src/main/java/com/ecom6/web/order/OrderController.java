@@ -174,8 +174,6 @@ public class OrderController {
 			model.addAttribute("url", url);
 			model.addAttribute("msg", msg);
 		}
-		session.setAttribute("ssKey", ssKey);
-		
 		return page;
 	}
 	
@@ -203,9 +201,117 @@ public class OrderController {
 							  HttpServletResponse res,
 							  OrderVO ovo,
 							  Model model) {
-		String page = "admin/Main";
-		model.addAttribute("content", "./OrderList.jsp");
 		
+		String page = "admin/Main";
+		String msg;
+		String url;
+		HttpSession session = req.getSession();
+		MemberVO ssKey = (MemberVO) session.getAttribute("ssKey");
+		if(ssKey!=null) {
+			if(ssKey.getM_role().equals("admin")) {
+				ovo.setM_role(ssKey.getM_role());
+				log.info("+===>"+ovo);
+				OrderVO order = orderService.getOrder(ovo);
+				model.addAttribute("order", order);
+				model.addAttribute("content", "./OrderDetail.jsp");		
+			} else {
+				session.removeAttribute("ssKey");
+				session.invalidate();
+				
+				msg = "올바른 접근이 아닙니다.";
+				url = "/login";
+				page = "MsgPage";
+				model.addAttribute("url", url);
+				model.addAttribute("msg", msg);
+			}
+		} else {
+			session.removeAttribute("ssKey");
+			session.invalidate();
+			
+			msg = "세션이 종료되었습니다.";
+			url = "/login";
+			page = "MsgPage";
+			model.addAttribute("url", url);
+			model.addAttribute("msg", msg);
+		}
+		
+		return page;
+	}
+	
+	@PostMapping("oStateUpdate")
+	public String oStateUpdate(HttpServletRequest req,
+							  HttpServletResponse res,
+							  OrderVO ovo,
+							  Model model) {
+		String page = "MsgPage";
+		String msg = null;
+		String url = null;
+		HttpSession session = req.getSession();
+		MemberVO ssKey = (MemberVO) session.getAttribute("ssKey");
+		if(ssKey!=null) {
+			if(ssKey.getM_role().equals("admin")) {
+				log.info("+===>"+ovo);
+				int r = orderService.updateState(ovo);
+				if (r>0)
+					msg = "주문상태 수정완료";		
+				else 
+					msg = "주문상태 수정실패";
+				url = "/orderMgt";		
+			} else {
+				session.removeAttribute("ssKey");
+				session.invalidate();
+				msg = "올바른 접근이 아닙니다.";
+				url = "/login";
+			}
+		} else {
+			session.removeAttribute("ssKey");
+			session.invalidate();
+			msg = "세션이 종료되었습니다.";
+			url = "/login";
+		}
+		model.addAttribute("url", url);
+		model.addAttribute("msg", msg);
+		return page;
+	}
+	
+	@GetMapping("orderDelete")
+	public String GetorderDelete(HttpServletRequest req,
+							  HttpServletResponse res,
+							  OrderVO ovo,
+							  Model model) {
+		return orderDelete(req, res, ovo, model);
+	}
+	
+	@PostMapping("orderDelete")
+	public String orderDelete(HttpServletRequest req,
+							  HttpServletResponse res,
+							  OrderVO ovo,
+							  Model model) {
+		String page = "MsgPage";
+		String msg = null;
+		String url = null;
+		HttpSession session = req.getSession();
+		MemberVO ssKey = (MemberVO) session.getAttribute("ssKey");
+		if(ssKey!=null) {
+			if(ssKey.getM_role().equals("admin")) {
+				// log.info("+===>"+ovo.getState());
+				Map<String, Object> reSet = orderWrapper.orderDelete(ovo);
+				msg = (String) reSet.get("msg");
+				url = "/orderMgt";		
+			} else {
+				session.removeAttribute("ssKey");
+				session.invalidate();
+				msg = "올바른 접근이 아닙니다.";
+				url = "/login";
+			}
+		} else {
+			session.removeAttribute("ssKey");
+			session.invalidate();
+			msg = "세션이 종료되었습니다.";
+			url = "/login";
+		}
+		model.addAttribute("url", url);
+		model.addAttribute("msg", msg);
 		return page;
 	}
 	

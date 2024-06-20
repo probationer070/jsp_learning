@@ -19,4 +19,8 @@ public interface OrderDao {
 
 	void orderStateUpdate(List<OrderVO> list);
 
+	int updateState(OrderVO ovo);
+
+	int deleteOrder(OrderVO ovo);
+
 }

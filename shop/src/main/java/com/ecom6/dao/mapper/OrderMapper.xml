@@ -30,7 +30,8 @@
 	FROM ORDERT
 	WHERE MEM_ID = #{mem_id} -->
 	<!-- /* 조인을 이용한 방법 */ -->
-	SELECT O_NO, O.PRICE, AMOUNT, QUANTITY, TO_CHAR(O_REGDATE, 'YYYY-MM-DD') O_REGDATE, STATE, MEM_ID, O.P_NO, P.IMAGE, P_NAME
+	SELECT O_NO, O.PRICE, AMOUNT, QUANTITY, TO_CHAR(O_REGDATE, 'YYYY-MM-DD') O_REGDATE, STATE, MEM_ID, 
+			(SELECT M_NAME FROM MEMBER WHERE MEM_ID=#{mem_id}) M_NAME, O.P_NO, P.STOCK , P.IMAGE, P_NAME
 	FROM ORDERT O
 	INNER JOIN PRODUCT P
 	ON O.P_NO = P.P_NO
@@ -70,7 +71,7 @@
 	<update id="orderStateUpdate" parameterType="list">
 		<foreach collection="list" item="item" index="index" separator=";"
 			open="DECLARE BEGIN" close="; END;">
-			UPDATE ORDERT SEt
+			UPDATE ORDERT SET
 			STATE=#{item.state},
 			O_REGDATE=SYSDATE
 			WHERE O_NO=#{item.o_no}
@@ -78,4 +79,20 @@
 			AND MEM_ID=#{item.mem_id}
 		</foreach>
 	</update>
+	
+	<update id="updateState" parameterType="ovo">
+		UPDATE ORDERT SET
+		STATE=#{state},
+		O_REGDATE=SYSDATE
+		WHERE O_NO=#{o_no}
+		AND P_NO=#{p_no}
+		AND MEM_ID=#{mem_id}
+	</update>
+	
+	<delete id="deleteOrder" parameterType="ovo">
+		DELETE FROM ORDERT 
+		WHERE P_NO = #{p_no} 
+		AND O_NO=#{o_no}
+		AND MEM_ID=#{mem_id}
+	</delete>
 </mapper>

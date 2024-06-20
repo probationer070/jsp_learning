@@ -1,5 +1,6 @@
 package com.ecom6.service.order;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -96,6 +97,16 @@ public class OrderServiceImpl implements OrderService {
 		}
 		orderDao.orderStateUpdate(list);
 		// log.info("list ===> "+list);
+	}
+
+	@Override
+	public int updateState(OrderVO ovo) {
+		return orderDao.updateState(ovo);
+	}
+
+	@Override
+	public int deleteOrder(OrderVO ovo) {
+		return orderDao.deleteOrder(ovo);
 	}
 
 }

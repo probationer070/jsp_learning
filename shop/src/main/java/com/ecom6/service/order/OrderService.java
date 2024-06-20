@@ -18,4 +18,8 @@ public interface OrderService {
 
 	void orderStateUpdate(ArrayList<String> tdArr);
 
+	int updateState(OrderVO ovo);
+
+	int deleteOrder(OrderVO ovo);
+
 }

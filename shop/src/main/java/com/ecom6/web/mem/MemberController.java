@@ -1,5 +1,7 @@
 package com.ecom6.web.mem;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +50,7 @@ public class MemberController {
 		return "MsgPage";
 	}
 	
-	@PostMapping("logoutProc")
+	@PostMapping(value={"logoutProc", "/admin/logoutProc"})
 	public String logoutProc(HttpServletRequest req) {
 		HttpSession session = req.getSession();
 		session.removeAttribute("ssKey");
@@ -57,7 +59,7 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-	@GetMapping("logoutProc")
+	@GetMapping(value={"logoutProc", "/admin/logoutProc"})
 	public String getlogoutProc(HttpServletRequest req) {
 		return logoutProc(req);
 	}
@@ -143,4 +145,47 @@ public class MemberController {
 		return "test";
 	}
 	
+	@GetMapping("/memberMgt")
+	public String memberMgt(HttpServletRequest req, 
+							HttpServletResponse res,
+							MemberVO mvo, Model model) {
+		String msg=null;
+		String url=null;
+		String page="Main";
+		HttpSession session = req.getSession();
+		MemberVO ssKey = (MemberVO) session.getAttribute("ssKey");
+		if(ssKey!=null) {
+			if(ssKey.getM_role().equals("admin")) {
+				mvo.setM_role(ssKey.getM_role());
+				Map<String, Object> reSet = memberService.getMemberList(mvo);
+				msg = (String) reSet.get("msg");
+				model.addAttribute("members", reSet.get("members"));
+				model.addAttribute("memTot", reSet.get("memTot"));
+				model.addAttribute("msg", msg);
+				model.addAttribute("content", "admin/memberList.jsp");			
+			} else {
+				session.removeAttribute("ssKey");
+				session.invalidate();
+				msg = "올바른 접근이 아닙니다.";
+				url = "/";
+				page = "MsgPage";
+			}
+		} else {
+			session.removeAttribute("ssKey");
+			session.invalidate();
+			msg = "로그인이 필요합니다.";
+			url = "/login";
+			page = "MsgPage";
+		}
+		model.addAttribute("url", url);
+		model.addAttribute("msg", msg);
+		return page;
+	}
+	
+	@PostMapping("/memberMgt")
+	public String memberMgtPost(HttpServletRequest req, 
+			HttpServletResponse res,
+			MemberVO mvo, Model model) {
+		return memberMgt(req, res, mvo, model);
+	}
 }
