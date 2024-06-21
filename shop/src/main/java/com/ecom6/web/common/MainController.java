@@ -33,7 +33,7 @@ public class MainController {
 		return page;
 	}
 	
-	@GetMapping("/admin/")
+	@GetMapping(value={"/admin/", "/admin"})
 	public String admin(HttpServletRequest req, 
 			HttpServletResponse res) {
 		MemberVO ssKey = null;

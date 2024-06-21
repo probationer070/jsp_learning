@@ -20,6 +20,32 @@ $().ready(function(){
 		}
 	})
 	
+	$('.mdetail').on('click', function(){
+		var mid = $(this).closest('tr').find('input[name=mem_id]').val();
+		var mnm = $(this).closest('tr').find('input[name=m_name]').val();
+		var zipcode = $(this).closest('tr').find('input[name=zipcode]').val();
+		var addr1 = $(this).closest('tr').find('input[name=address]').val();
+		var addr2 = $(this).closest('tr').find('input[name=address2]').val();
+		var job = $(this).closest('tr').find('input[name=m_job]').val();
+		var phone = $(this).closest('tr').find('input[name=m_phone]').val();
+		var mEmail = $(this).closest('tr').find('input[name=m_email]').val();
+		var regDate = $(this).closest('tr').find('input[name=m_regdate]').val();
+		
+		
+		$('form[name=form1] input[name=mem_id]').val(mid);
+		$('form[name=form1] input[name=m_name]').val(mnm);
+		$('form[name=form1] input[name=zipcode]').val(zipcode);
+		$('form[name=form1] input[name=address]').val(addr1);
+		$('form[name=form1] input[name=address2]').val(addr2);
+		$('form[name=form1] input[name=m_job]').val(job);
+		$('form[name=form1] input[name=m_phone]').val(phone);
+		$('form[name=form1] input[name=m_email]').val(mEmail);
+		$('form[name=form1] input[name=m_regdate]').val(regDate);
+		$("form[name=form1]").attr('action', 'customInfo?m_id='+mid);
+		$('form[name=form1]').submit();
+		// alert(pno+"::::"+ono+"::::"+mid);
+	 })
+	
 	$('#submit1').on('click', function(){
 		if(chkValidate('form1')) {
 			if(idSubmitChk==1){

@@ -34,14 +34,16 @@
 		M_PHONE=#{m_phone}, 
 		ZIPCODE=#{zipcode},
 		ADDRESS=#{address}, 
-		ADDRESS2=#{address2}, 
+		ADDRESS2=#{address2},
+		<if test="m_role=='mem'">
 		M_JOB=#{m_job}, 
+		</if>
 		M_REGDATE=SYSDATE
 		WHERE MEM_ID=#{mem_id}
 	</update>
 	
 	<select id="getTotalMember" resultType="int" parameterType="mvo">
-		SELECT COUNT(*) FROM MEMBER
+		SELECT COUNT(*) FROM MEMBER WHERE M_ROLE='mem'
 	</select>
 	
 	<select id="getMemberList" parameterType="mvo" resultType="mvo">

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ecom6.dao.notice.NoticeDao">
+<select id="getNoticeCnt" resultType="int">
+	SELECT COUNT(NOTI_NO) FROM NOTICET
+</select>
+<select id="getNoticeList" parameterType="nvo" resultType="nvo">
+	SELECT * FROM (
+	SELECT ROWNUM RN, A.* FROM (
+	SELECT NOTI_NO, SUBJECT, CONTENT, READCOUNT, WRITER, 
+			TO_CHAR(VDATE, 'YYYY-MM-DD') VDATE, 
+			TO_CHAR(REGDATE, 'YYYY-MM-DD') REGDATE, STATE
+	        FROM NOTICET
+	        ) A 
+	) 
+	<if test="end>1">
+		<![CDATA[
+		WHERE RN >= #{start} AND RN <= #{end}
+		]]>
+	</if>
+</select>
+</mapper>

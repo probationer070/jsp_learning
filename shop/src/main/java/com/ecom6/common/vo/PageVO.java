@@ -1,5 +1,10 @@
 package com.ecom6.common.vo;
 
+import lombok.Data;
+import lombok.ToString;
+
+@Data
+@ToString
 public class PageVO {
 	private int pgCnt;		// 총 페이지
 	private int BlockCnt;	// 총 페이지 블록 수

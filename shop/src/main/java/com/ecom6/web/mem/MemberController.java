@@ -96,15 +96,7 @@ public class MemberController {
 	public String login() {
 		return "member/login";
 	}
-	
-	@GetMapping("/info")
-	public String infoView(HttpServletRequest req, Model model) {
-		HttpSession session = req.getSession();
-		MemberVO mvo = (MemberVO) session.getAttribute("ssKey");
-		model.addAttribute("mvo", mvo);
-		model.addAttribute("content", "member/Memberinfo.jsp"); 
-		return "Main";
-	}
+
 
 	@PostMapping("/memUpdateForm")
 	public String updateForm(HttpServletRequest req, Model model) {
@@ -112,6 +104,15 @@ public class MemberController {
 		MemberVO mvo = (MemberVO) session.getAttribute("ssKey");
 		model.addAttribute("mvo", mvo);
 		model.addAttribute("content", "member/UpdateForm.jsp"); 
+		return "Main";
+	}
+	
+	@GetMapping("/info")
+	public String infoView(HttpServletRequest req, Model model) {
+		HttpSession session = req.getSession();
+		MemberVO mvo = (MemberVO) session.getAttribute("ssKey");
+		model.addAttribute("mvo", mvo);
+		model.addAttribute("content", "member/MemberInfo.jsp"); 
 		return "Main";
 	}
 	
@@ -138,11 +139,6 @@ public class MemberController {
 		model.addAttribute("url", "/");
 		model.addAttribute("msg", msg);
 		return "MsgPage";
-	}
-	
-	@GetMapping("/notice")
-	public String test() {
-		return "test";
 	}
 	
 	@GetMapping("/memberMgt")
@@ -187,5 +183,148 @@ public class MemberController {
 			HttpServletResponse res,
 			MemberVO mvo, Model model) {
 		return memberMgt(req, res, mvo, model);
+	}
+	
+	@PostMapping("/customInfo")
+	public String customInfo(HttpServletRequest req, 
+							HttpServletResponse res,
+							MemberVO mvo, // 커스텀 정보
+							Model model) {
+		String msg=null;
+		String url=null;
+		String page=null;
+		HttpSession session = req.getSession();
+		MemberVO ssKey = (MemberVO) session.getAttribute("ssKey");
+		if(ssKey!=null) {
+			if(ssKey.getM_role().equals("admin")) {
+				model.addAttribute("mvo", mvo);	
+				model.addAttribute("content", "member/MemberInfo.jsp");	
+				page = "Main";
+			} else {
+				session.removeAttribute("ssKey");
+				session.invalidate();
+				msg = "올바른 접근이 아닙니다.";
+				url = "/";
+				page = "MsgPage";
+			}
+		} else {
+			session.removeAttribute("ssKey");
+			session.invalidate();
+			msg = "로그인이 필요합니다.";
+			url = "/login";
+			page = "MsgPage";
+		}
+		model.addAttribute("url", url);
+		model.addAttribute("msg", msg);
+		return page;
+	}
+	
+	@GetMapping("/customInfo")
+	public String GetcustomInfo(HttpServletRequest req, 
+			HttpServletResponse res,
+			MemberVO mvo, // 커스텀 정보
+			Model model) {
+		return customInfo(req, res, mvo, model);
+	}
+	
+	
+	
+	@GetMapping("/admin/info")
+	public String infoView(HttpServletRequest req, 
+							HttpServletResponse res,
+							MemberVO mvo, // 커스텀 정보
+							Model model) {
+		String msg=null;
+		String url=null;
+		String page=null;
+		HttpSession session = req.getSession();
+		MemberVO ssKey = (MemberVO) session.getAttribute("ssKey");
+		if(ssKey!=null) {
+			if(ssKey.getM_role().equals("admin")) {
+				model.addAttribute("mvo", ssKey);	
+				model.addAttribute("content", "../admin/MemberInfo.jsp");	
+				page = "admin/Main";
+			} else {
+				session.removeAttribute("ssKey");
+				session.invalidate();
+				msg = "올바른 접근이 아닙니다.";
+				url = "/login";
+				page = "MsgPage";
+				model.addAttribute("url", url);
+				model.addAttribute("msg", msg);
+			}
+		} else {
+			page="redirect:/";
+		}
+		return page;
+	}
+	
+	@PostMapping("/admin/memUpdateForm")
+	public String AdminupdateForm(HttpServletRequest req, Model model) {
+		
+		String msg=null;
+		String url=null;
+		String page=null;
+		HttpSession session = req.getSession();
+		MemberVO ssKey = (MemberVO) session.getAttribute("ssKey");
+		if(ssKey!=null) {
+			if(ssKey.getM_role().equals("admin")) {
+				model.addAttribute("mvo", ssKey);	
+				model.addAttribute("content", "../admin/UpdateForm.jsp"); 
+				page = "admin/Main";
+			} else {
+				session.removeAttribute("ssKey");
+				session.invalidate();
+				msg = "올바른 접근이 아닙니다.";
+				url = "/login";
+				page = "MsgPage";
+				model.addAttribute("url", url);
+				model.addAttribute("msg", msg);
+			}
+		} else {
+			page="redirect:/";
+		}
+		return page;
+	}
+	
+	@GetMapping("/admin/memUpdateProc")
+	public String AdminGetmemUpdateProc(HttpServletRequest req, 
+									 HttpServletResponse res,
+									 MemberVO mvo, Model model) {
+		return AdminmemUpdateProc(req, res, mvo, model);
+	}
+	
+	@PostMapping("/admin/memUpdateProc")
+	public String AdminmemUpdateProc(HttpServletRequest req, 
+									 HttpServletResponse res,
+									 MemberVO mvo, Model model) {
+		String msg = null;
+		String page =null;
+		String url=null;
+		HttpSession session = req.getSession();
+		MemberVO ssKey = (MemberVO) session.getAttribute("ssKey");
+		
+		if(ssKey!=null) {
+			if(ssKey.getM_role().equals("admin")) {
+				int r = memberService.memberUpdate(mvo);
+				if (r>0) {
+					msg = "관리자 정보 수정 성공";
+				} else {
+					msg = "관리자 정보 수정 실패";
+				}
+			} else {
+				msg = "올바른 접근이 아닙니다.";
+				url = "/login";
+				page = "MsgPage";
+			}
+		} else {
+			page="redirect:/";
+		}
+		session.removeAttribute("ssKey");
+		session.invalidate();
+		model.addAttribute("url", "/");
+		model.addAttribute("msg", msg);
+		return "MsgPage";
+
 	}
 }
