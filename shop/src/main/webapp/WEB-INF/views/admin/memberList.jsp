@@ -19,13 +19,10 @@
 	<table>
 		<thead>
 			<tr>
-				<th class="mcol1">회원번호</th>
-				<th class="mcol2">회원비밀번호</th>
-				<th class="mcol3">회원이름</th>
-				<th class="mcol4">이메일</th>
-				<th class="mcol5">전화번호</th>
-				<th class="mcol6">직업</th>
-				<th class="mcol7">등록일</th>
+				<th class="mcol1">고객명(고객아이디)</th>
+				<th class="mcol3">고객이메일</th>
+				<th class="mcol4">고객연락처</th>
+				<th class="mcol6">고객가입일</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -39,30 +36,23 @@
 					<c:forEach var="member" items="${members}">
 						<tr>
 	   					<td class="mcol1">
-	   					<input type="text" name="mem_id" value="${member.mem_id}"
-	    					class="" readonly="readonly">
-		    				</td>
-	    				<td class="mcol2 pDetail">
-						<input type="text" name="m_passwd" value="${member.m_passwd}"
-						     					class="" readonly="readonly">
-						</td>
-	     				<td class="mcol3">
-     					<input type="text" name="m_name" value="${member.m_name}"
-	   						class="number" readonly="readonly">
-		   				</td>
-		   				<td class="mcol4">
+	   					<input type="text" name="m_name" value="${member.m_name}(${member.mem_id})"
+	    					class="mdetail" readonly="readonly">
+	   					<input type="hidden" name="mem_id" value="${member.mem_id}" class="">
+	   					<input type="hidden" name="zipcode" value="${member.zipcode}" class="">
+	   					<input type="hidden" name="address" value="${member.address}" class="">
+	   					<input type="hidden" name="address2" value="${member.address2}" class="">
+	   					<input type="hidden" name="m_job" value="${member.m_job}" class="">
+	    				</td>
+		   				<td class="mcol3">
 	   					<input type="text" name="m_email" value="${member.m_email}"
 		   					class="" readonly="readonly">
 		   				</td>
-		   				<td class="mcol5">
-	   					<input type="text" name="m_phone" value="${member.m_phone}"
-		   					class="number" readonly="readonly">
+	     				<td class="mcol4">
+     					<input type="text" name="m_phone" value="${member.m_phone}"
+	   						class="number" readonly="readonly">
 		   				</td>
 		   				<td class="mcol6">
-	   					<input type="text" name="m_job" value="${member.m_job}"
-		   					class="number" readonly="readonly">
-		   				</td>
-		   				<td class="mcol7">
 	   					<input type="text" name="m_regdate" value="${member.m_regdate}"
 		   					class="number" readonly="readonly">
 		   				</td>
@@ -72,6 +62,17 @@
 			</c:choose>
 		</tbody>
 	</table>
+	<form name="form1" method="post" action="">
+		<input type="hidden" name="mem_id" value="">
+		<input type="hidden" name="m_name" value="">
+		<input type="hidden" name="zipcode" value="">
+		<input type="hidden" name="address" value="">
+		<input type="hidden" name="address2" value="">
+		<input type="hidden" name="m_job" value="">
+		<input type="hidden" name="m_phone" value="">
+		<input type="hidden" name="m_email" value="">
+		<input type="hidden" name="m_regdate" value="">
+	</form>
 </div>
 			
 </body>

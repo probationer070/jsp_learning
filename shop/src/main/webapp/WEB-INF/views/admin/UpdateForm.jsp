@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="css/signup.css" />
+<link rel="stylesheet" type="text/css" href="../css/signup.css" />
 </head>
 <body>
 <form action="memUpdateProc" name="form1" method="post">
@@ -76,6 +76,7 @@
 				<input type="hidden" id="sample6_extraAddress" >
 			</th>
 		</tr>
+		<c:if test="${mvo.m_role=='mem'}">
 		<tr>
 			<th class="col1">직업</th>
 			<th class="col2">
@@ -92,24 +93,26 @@
 				</script>
 			</th>
 			<th>&nbsp;</th>
+		</c:if>
+		<c:if test="${mvo.m_role=='admin'}">
+		<tr>
+			<th class="col1">직급</th>
+			<th class="col2">
+				<input type="text" name="m_job" 
+				readonly="readonly" 
+				value="${mvo.m_job}">
+			</th>
+			<th>&nbsp;</th>
+		</c:if>
 		</tr>
 		
 		<tfoot>
-		<c:if test="${ssKey.m_role=='mem'}">
 		<tr>
 			<td colspan="3">
 				<button type="button" id="submit3" class="btn-primary">정보수정</button>
 				<button type="button" id="cancel" class="btn-primary">취소</button>
 			</td>
 		</tr>
-		</c:if>
-		<c:if test="${ssKey.m_role=='admin'}">
-		<tr>
-			<td colspan="3">
-				<button type="button" id="submit3" class="btn-primary">정보수정</button>
-			</td>
-		</tr>
-		</c:if>
 		</tfoot>
 	</table>
 </form>

@@ -30,7 +30,7 @@
 	        <div class="" id="navbarNav">
 	            <ul class="navbar-nav">
 	                <li class="nav-item active">
-	                    <a href="/admin">Home <span class="sr-only">(current)</span></a>
+	                    <a href="/admin/">Home <span class="sr-only">(current)</span></a>
 	                </li>
 	                <c:choose>
 		             	<c:when test="${ssKey!=null and ssKey.m_role=='admin'}">

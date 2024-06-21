@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Message</title>
-<script src="/js/jquery-3.7.1.min.js"></script>
+<script src="../js/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
 	$(function() {
 		var msg = "${msg}";
