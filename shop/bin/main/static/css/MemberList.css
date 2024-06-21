@@ -9,14 +9,14 @@ table {
 	width: 100%;
 }
 
-.mcol0 { width: 5%; padding: 3px 3px 3px 3px;}
-.mcol1 { width: 10%; padding: 3px 3px 3px 3px;}
-.mcol2 { width: 10%; padding: 3px 3px 3px 3px;}
-.mcol3 { width: 7%; padding: 3px 3px 3px 3px;}
-.mcol4 { width: 14%; padding: 3px 3px 3px 3px;}
-.mcol5 { width: 10%; padding: 3px 3px 3px 3px;}
-.mcol6 { width: 10%; padding: 3px 3px 3px 3px;}
-.mcol7 { width: 10%; padding: 3px 3px 3px 3px; text-align: center;}
+.mcol0 { width: 5%; padding: 6px;}
+.mcol1 { width: 7%; padding: 5px;}
+.mcol2 { width: 15%; padding: 5px;}
+.mcol3 { width: 7%; padding: 5px;}
+.mcol4 { width: 7%; padding: 5px;}
+.mcol5 { width: 5%; padding: 5px;}
+.mcol6 { width: 7%; padding: 5px;}
+.mcol7 { width: 10%; padding: 5px; text-align: center;}
 
 .mcol1 input, .mcol2 input, .mcol3 input , .mcol4 input , .mcol5 input , .mcol6 input, .mcol7 input      {
 	width: 100%;

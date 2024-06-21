@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+/* table {
+	width: 100%;
+	border: 1px solid #000;
+}
+tr, td, th {
+	border: 1px solid #000;
+}
+ */
+.ncol1 { width: 30%; padding: 3px 3px 3px 3px;}
+.ncol2 { width: 15%; padding: 3px 3px 3px 10px;}
+.ncol3 { width: 15%; padding: 3px 3px 3px 3px;}
+.ncol4 { width: 15%; padding: 3px 3px 3px 3px;}
+.ncol5 { width: 7%; padding: 3px 3px 3px 3px;}
+
+.ncol1 input, .ncol2 input, .ncol3 input , .ncol4 input , .ncol5 input   {
+	width: 100%;
+	padding: 8px;
+	object-fit: contain;
+}
+
+.btnArea {
+	margin-top: 40px;
+}
